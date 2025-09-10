@@ -106,10 +106,17 @@
       </ul>
     </div>
     @endif
-  </div>
+    @if (session('info'))
 
+    <script>
+      alert("{{ session('info') }}");
+    </script>
+
+    @endif
+  </div>
+  
   <div class="container">
-    <h1>Update  Course</h1>
+    <h1>Update Course</h1>
     <form action="{{route('course.update',$course->id)}}" method="POST">
       @csrf
       @method('PUT')
@@ -119,11 +126,11 @@
         <label for="course_name">Course Name</label>
       </div>
       <div class="form-group">
-        <input type="text" id="name" name="course_fee" placeholder=" " value="{{old('course_fee',$course->course_fee)}}"required>
+        <input type="text" id="name" name="course_fee" placeholder=" " value="{{old('course_fee',$course->course_fee)}}" required>
         <label for="course_fee">Course Fee</label>
       </div>
       <div class="form-group">
-        <input type="text" id="name" name="course_time" placeholder=" " value= "{{old('course_time',$course->course_time)}}"required>
+        <input type="text" id="name" name="course_time" placeholder=" " value="{{old('course_time',$course->course_time)}}" required>
         <label for="course_time">Course time</label>
       </div>
 
@@ -139,7 +146,7 @@
 
       <div class="form-group">
         <select id="teacher" name="teacher_id" required>
-          <option value="" disabled selected>Select teacher</option>
+          <option value="{{$course->teacher_id}}">Select teacher</option>
           @if($teachers && count($teachers) > 0)
           @foreach($teachers as $teacher)
           <option value="{{$teacher->id}}">{{$teacher->name}}</option>

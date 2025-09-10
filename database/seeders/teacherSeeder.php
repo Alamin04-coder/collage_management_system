@@ -24,7 +24,7 @@ class TeacherSeeder extends Seeder
             $records[] = [
                 'name'           => 'Teacher '.$i,
                 'user_id'        => rand(1, 49), 
-                'teacher_id'     => 'TCH'.str_pad($i, 4, '0', STR_PAD_LEFT), // যেমন TCH0001
+                'teacher_id'     => 'TI'.str_pad($i, 2, '1', STR_PAD_LEFT), // যেমন TCH0001
                 'phone'          => '01'.rand(100000000, 999999999),
                 'gender'         => $genders[array_rand($genders)],
                 'dob'            => Carbon::now()->subYears(rand(25, 50))->format('Y-m-d'),

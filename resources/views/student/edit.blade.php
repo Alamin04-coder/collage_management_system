@@ -78,7 +78,7 @@
     <div class="container d-flex justify-content-center align-items-center vh-100">
         <div class="form-card w-75">
             <div class="text-center mb-4">
-                <h2>Complete Your Profile</h2>
+                <h2>Edit Your Profile</h2>
             </div>
             <div>
                 @if ($errors->any())

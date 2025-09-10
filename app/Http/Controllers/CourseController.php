@@ -7,7 +7,7 @@ use App\Models\teacher;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use PhpParser\Node\Stmt\ElseIf_;
 
 class CourseController extends Controller
 {
@@ -40,7 +40,11 @@ class CourseController extends Controller
             'teacher_id' => 'required',
         ]);
         course::create($validatedData);
-        return redirect()->back()->with('success', 'add successfully ');
+        if(Auth::user()->role == 'admin') {
+            return redirect()->route('course.list')->with('success','Course successfully added ');
+        } else {
+        return redirect()->route('teacher.dashboard')->with('success', 'add successfully ');
+        }
     }
 
     /**
@@ -108,7 +112,7 @@ class CourseController extends Controller
 
         $course = Course::findOrFail($id);
         if ($course->teacher_id != Auth::user()->id && Auth::user()->role !== 'admin') {
-            abort(403, 'tor bap er na ki tui delete korbi ?');
+            abort(403, 'Unauthorized Action');
         }
 
         $course->delete();
