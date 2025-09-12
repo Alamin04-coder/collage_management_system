@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequests;
 use App\Models\teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,24 +30,12 @@ class teacherController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserRequests $request)
     {
           // Validate and store teacher information'
           
 
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'teacher_id' => 'required|max:6|unique:teachers',
-            'phone' => 'required|string|max:15',
-            'gender' => 'required|string|max:10',
-            'dob' => 'required|date',
-            'department' => 'required|string|max:255',
-            'specialization' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
-            'join_date' => 'required|date',
-            'address' => 'required|string|max:255',
-
-        ]);
+        $validatedData = $request->validated();
 
         $imageName = null;
 
@@ -93,26 +82,14 @@ class teacherController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UserRequests $request, string $id)
     {
         $teacher = teacher::find($id);
 
         if(Auth::user()->role !== 'admin' && $teacher->user->id != Auth::id()){
             abort(403,'unauthorized action !');
         }
-       $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'teacher_id' => 'required|max:6|unique:teachers,teacher_id,'. $id,
-            'phone' => 'required|string|max:15',
-            'gender' => 'required|string|max:10',
-            'dob' => 'required|date',
-            'department' => 'required|string|max:255',
-            'specialization' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
-            'join_date' => 'required|date',
-            'address' => 'required|string|max:255',
-
-        ]);
+       $validatedData = $request->validated();
           $imageName = $teacher->image; 
         if ($request->hasFile('image')) {
             if ($imageName && file_exists(public_path('teacher_images/' . $imageName))) {

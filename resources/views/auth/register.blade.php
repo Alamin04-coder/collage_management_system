@@ -101,13 +101,7 @@
             <div class="form-card">
                 <h2 class="text-center mb-4">Register Form</h2>
 
-                @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show text-center"
-                    style="width: 400px; margin: 0 auto">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                @endif
+                @include('layouts.message') 
 
                 <form method="POST" action="{{ route('register') }}">
                     @csrf

@@ -82,22 +82,14 @@
             <div class="text-center mb-4">
                 <h2>Update Teacher Profile</h2>
             </div>
-            <div>
-                @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
-            </div>
+                @include('layouts.message') 
+
             <form action="{{route('teacher.update',$teacher->id)}}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 @method('PUT')
 
+                <input type="hidden" name="form_type" value="teacher">
                 <div class="row g-3">
                     <!-- Full Name -->
                     <div class="col-md-6">

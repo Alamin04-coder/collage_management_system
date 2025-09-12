@@ -106,6 +106,8 @@
 
 <body>
     <div class="container dashboard-container">
+    @include('layouts.message') 
+
 
         <div class="text-center mb-5">
             <h1 class="dashboard-title">🎓 Welcome, {{ Auth::user()->teacher->name ?? 'alamin' }}!</h1>

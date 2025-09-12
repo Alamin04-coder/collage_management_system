@@ -23,7 +23,7 @@ class AdminController extends Controller
         $totalUser = User::count();
         $totalCourse = course::count();
 
-        return view("admin.dashboard", compact('totalStudent', 'totalTeacher', 'totalUser','totalCourse'));
+        return view("admin.dashboard", compact('totalStudent', 'totalTeacher', 'totalUser', 'totalCourse'));
     }
     // Show all students with search and pagination
     public function show_student(Request $request)
@@ -152,8 +152,8 @@ class AdminController extends Controller
     public function destroy(string $id)
     {
         $user = User::find($id);
-        if(Auth::user()->role !== 'admin' && Auth::user()->id !== $user->id) {
-            abort(403,'unauthorized action');
+        if (Auth::user()->role !== 'admin' && Auth::user()->id !== $user->id) {
+            abort(403, 'unauthorized action');
         }
         $user->delete();
 

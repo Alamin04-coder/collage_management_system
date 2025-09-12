@@ -96,23 +96,14 @@
 </head>
 
 <body>
-  <div>
-    @if ($errors->any())
-    <div class="alert alert-danger">
-      <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-      </ul>
-    </div>
-    @endif
-  </div>
+@include('layouts.message') 
 
   <div class="container">
     <h1>Create New Course</h1>
     <form action="{{route('course.store')}}" method="POST">
       @csrf
 
+      <input type="hidden" name="form_type" value="course">
       <div class="form-group">
         <input type="text" id="name" name="course_name" placeholder=" " required>
         <label for="course_name">Course Name</label>

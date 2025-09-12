@@ -118,11 +118,7 @@
 </head>
 
 <body>
-    @if(session('info'))
-    <script>
-        alert("{{session('info')}}")
-    </script>
-    @endif
+    
 
 
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
@@ -130,28 +126,13 @@
             <div class="form-card">
                 <h2 class="text-center mb-4">Register Form</h2>
 
-                @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show justify-center text-center"
-                    style="width: 400px; margin: 0 auto">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                @endif
-
-                @if ($errors->any())
-            <div class="alert alert-danger" >
-                <ul>
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
+              @include('layouts.message') 
 
                 <form method="POST" action="{{ route('admin.user.update',$user->id) }}">
                     @csrf
                     @method('PUT')
 
+                    <input type="hidden" name="form_type" value="user">
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="{{old('name',$user->name)}}">
                         <label for="name">Name</label>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Http\Requests\UserRequests;
 use App\Models\student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +16,6 @@ class studentController extends Controller
     {
         $student = Auth::user()->student;
         return view("student.dashboard", compact("student"));
-
     }
 
     /**
@@ -30,18 +29,9 @@ class studentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserRequests $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'session' => 'required|string|max:255',
-            'department' => 'required|string|max:255',
-            'class_roll' => 'required|string|max:255|unique:students',
-            'board_roll' => 'required|string|max:255|unique:students',
-            'registration_no' => 'required|string|max:255|unique:students',
-            'shift' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
-        ]);
+        $validatedData = $request->validated();
 
         $imageName = null;
         if ($request->hasFile('image')) {
@@ -89,23 +79,14 @@ class studentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UserRequests $request, string $id)
     {
 
         $students = Student::findOrFail($id);
         if (Auth::user()->role !== 'admin' && $students->user->id != Auth::id()) {
             abort(403, 'unauthorized action !');
         }
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'session' => 'required|string|max:255',
-            'department' => 'required|string|max:255',
-            'class_roll' => 'required|string|max:255|unique:students,class_roll,' . $id,
-            'board_roll' => 'required|string|max:255|unique:students,board_roll,' . $id,
-            'registration_no' => 'required|string|max:255|unique:students,registration_no,' . $id,
-            'shift' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
-        ]);
+        $validatedData = $request->validated();
 
 
 
@@ -120,8 +101,8 @@ class studentController extends Controller
         $validatedData['image'] = $imageName;
         $changes = [];
         foreach ($validatedData as $key => $value) {
-            if ($students ->$key != $value) {
-            $changes[$key] = $value;
+            if ($students->$key != $value) {
+                $changes[$key] = $value;
             }
         }
 
@@ -154,11 +135,11 @@ class studentController extends Controller
         }
     }
 
-   
+
 
     public function update_p()
     {
-       
+
         $student = Auth::user()->student;
         return view("student.profile", compact("student"));
     }

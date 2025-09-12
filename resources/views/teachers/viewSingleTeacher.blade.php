@@ -108,7 +108,7 @@
 
             .profile-info p {
                 font-size: 13px;
-                
+
             }
         }
     </style>
@@ -116,7 +116,9 @@
 
 <body>
 
-    <div class="profile-card text-center" >
+    <div class="profile-card text-center">
+        @include('layouts.message')
+
         <!-- Profile Image -->
         @if($teacher->image)
         <img src="{{ asset('teacher_images/'.$teacher->image) }}" alt="Profile Image" class="profile-img">
@@ -137,19 +139,19 @@
             <p><span class="profile-title">Joining Date:</span> {{$teacher->join_date ?? 'not found'}}</p>
             <p><span class="profile-title">Role:</span> {{$teacher->user->role}}</p>
             <p><span class="profile-title">Account Created:</span>
-        {{ Auth::user()->created_at->format('d M Y, h:i A') ?? 'not found' }}
-      </p>
+                {{ Auth::user()->created_at->format('d M Y, h:i A') ?? 'not found' }}
+            </p>
         </div>
 
         <div>
             <!-- Back Button -->
             <a href="{{ url()->previous() }}" class="btn btn-custom">⬅ Back</a>
             <form action="{{ route('destroy.user',Auth::user()->id) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger"
-                                        onclick="return confirm('Are you sure?')">Delete</button>
-                                </form>
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-sm btn-danger"
+                    onclick="return confirm('Are you sure?')">Delete</button>
+            </form>
         </div>
 
 </body>

@@ -32,31 +32,8 @@
 
     @include('layouts.navbar')
     @include('layouts.sidebar')
-    @if (session('success'))
+    @include('layouts.message') 
 
-    <div class="alert alert-info alert-dismissible fade show" style="text-align: center;" role="alert">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    @endif
-    @if (session('info'))
-
-    <div class="alert alert-info alert-dismissible fade show" style="text-align: center;" role="alert">
-        {{ session('info') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-
-    @endif
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
-    </div>
 
 
     <!-- Main Content -->

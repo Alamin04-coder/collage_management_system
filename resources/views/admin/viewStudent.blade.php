@@ -103,32 +103,7 @@
                 <button type="submit" class="btn btn-primary">Search</button>
             </form>
         </div>
-        <div>
-            @if (session('success'))
-
-            <div class="alert alert-info alert-dismissible fade show"  style="text-align: center;" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            @endif
-            @if (session('info'))
-
-            <div class="alert alert-info alert-dismissible fade show" style="text-align: center;" role="alert">
-                {{ session('info') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-
-            @endif
-            @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
-        </div>
+       @include('layouts.message') 
 
         @if($students->isEmpty())
         <div class="alert alert-info" style="text-align: center;" >

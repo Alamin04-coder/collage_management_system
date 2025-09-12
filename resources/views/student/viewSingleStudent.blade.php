@@ -114,6 +114,8 @@
 </head>
 
 <body>
+    @include('layouts.message') 
+
 
   <div class="profile-card text-center">
     @if($student->image)

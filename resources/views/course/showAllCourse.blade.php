@@ -122,23 +122,7 @@
     </div>
 
     <!-- Alerts -->
-    <div>
-        @if (session('success'))
-            <div class="alert alert-success text-center">{{ session('success') }}</div>
-        @endif
-        @if (session('info'))
-            <div class="alert alert-info text-center">{{ session('info') }}</div>
-        @endif
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-    </div>
+    @include('layouts.message') 
 
     @if($course->isEmpty())
         <div class="alert alert-info text-center">

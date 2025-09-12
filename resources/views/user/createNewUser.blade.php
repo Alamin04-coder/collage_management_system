@@ -121,18 +121,14 @@
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
         <div class="col-md-4">
             <div class="form-card">
-                <h2 class="text-center mb-4">Register Form</h2>
+                <h2 class="text-center mb-4">ADD New User</h2>
 
-                @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show justify-center text-center"
-                    style="width: 400px; margin: 0 auto">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                @endif
+                   @include('layouts.message') 
+
 
                 <form method="POST" action="{{ route('admin.register') }}">
                     @csrf
+                    <input type="hidden" name="form_type" value="user">
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="{{old('name')}}">
                         <label for="name">Name</label>

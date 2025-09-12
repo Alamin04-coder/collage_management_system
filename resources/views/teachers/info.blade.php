@@ -80,20 +80,11 @@
             <div class="text-center mb-4">
                 <h2>Complete Teacher Profile</h2>
             </div>
-            <div>
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-            </div>
+            @include('layouts.message') 
             <form action="{{route('store.teacher')}}" method="POST" enctype="multipart/form-data">
                 @csrf
 
+                <input type="hidden" name="form_type" value="teacher">
                 <div class="row g-3">
                     <!-- Full Name -->
                     <div class="col-md-6">

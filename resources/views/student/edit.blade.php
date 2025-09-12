@@ -80,28 +80,13 @@
             <div class="text-center mb-4">
                 <h2>Edit Your Profile</h2>
             </div>
-            <div>
-                @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
-                @if (session('info'))
+            @include('layouts.message')
 
-                <script>
-                    alert("{{ session('info') }}");
-                </script>
-
-                @endif
-            </div>
             <form action="{{route('admin.student.update',$students->id)}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
+                <input type="hidden" name="form_type" value="student">
                 <div class="row g-3">
                     <div class="col-md-6">
                         <div class="form-floating">
@@ -170,7 +155,7 @@
                             style="display:none;">
                         @endif
                     </div>
-                    
+
                     <div class="d-flex justify-content-center align-items-center gap-3 mb-4">
                         @if(Auth::user()->role === 'admin')
                         <a href="{{ route('admin.student.list')}}" class="btn btn-secondary">

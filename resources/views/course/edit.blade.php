@@ -96,24 +96,7 @@
 </head>
 
 <body>
-  <div>
-    @if ($errors->any())
-    <div class="alert alert-danger">
-      <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-      </ul>
-    </div>
-    @endif
-    @if (session('info'))
-
-    <script>
-      alert("{{ session('info') }}");
-    </script>
-
-    @endif
-  </div>
+@include('layouts.message') 
   
   <div class="container">
     <h1>Update Course</h1>
@@ -121,6 +104,7 @@
       @csrf
       @method('PUT')
 
+      <input type="hidden" name="form_type" value="course">
       <div class="form-group">
         <input type="text" id="name" name="course_name" placeholder=" " value="{{old('course_name',$course->course_name)}}" required>
         <label for="course_name">Course Name</label>

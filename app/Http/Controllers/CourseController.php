@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequests;
 use App\Models\course;
 use App\Models\teacher;
 use App\Models\User;
@@ -28,22 +29,15 @@ class CourseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserRequests $request)
     {
 
-        $validatedData =  $request->validate([
-            'course_name' => 'required|max:100',
-            'course_fee' => 'required|max:8',
-            'course_time' => 'required',
-            'course_code' => 'required',
-            'description' => 'required',
-            'teacher_id' => 'required',
-        ]);
+        $validatedData =  $request->validated();
         course::create($validatedData);
-        if(Auth::user()->role == 'admin') {
-            return redirect()->route('course.list')->with('success','Course successfully added ');
+        if (Auth::user()->role == 'admin') {
+            return redirect()->route('course.list')->with('success', 'Course successfully added ');
         } else {
-        return redirect()->route('teacher.dashboard')->with('success', 'add successfully ');
+            return redirect()->route('teacher.dashboard')->with('success', 'add successfully ');
         }
     }
 
@@ -75,17 +69,10 @@ class CourseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UserRequests $request, string $id)
     {
         $course = Course::findOrFail($id);
-        $validatedData =  $request->validate([
-            'course_name' => 'required|max:100',
-            'course_fee' => 'required|max:8',
-            'course_time' => 'required',
-            'course_code' => 'required',
-            'description' => 'required',
-            'teacher_id' => 'required',
-        ]);
+        $validatedData =  $request->validated();
         $change = [];
         foreach ($validatedData as $key => $value) {
             if ($course->$key != $value) {

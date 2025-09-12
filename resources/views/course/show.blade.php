@@ -102,6 +102,7 @@
 
 <body>
 
+@include('layouts.message') 
   <div class="profile-card text-center">
    
     <div class="profile-info text-start">

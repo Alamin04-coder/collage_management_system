@@ -29,27 +29,8 @@
 
 <body class="bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 min-h-screen flex items-center justify-center p-6">
 
-  @if (session('success'))
-  <div class="fixed top-5 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg animate-bounce">
-    {{ session('success') }}
-  </div>
-  @endif
+      @include('layouts.message') 
 
-  @if (session('info'))
-  <script>
-    alert("{{ session('info') }}");
-  </script>
-  @endif
-
-  @if ($errors->any())
-  <div class="fixed top-5 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg">
-    <ul>
-      @foreach ($errors->all() as $error)
-      <li>{{ $error }}</li>
-      @endforeach
-    </ul>
-  </div>
-  @endif
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
     <!-- Student Info Card -->
