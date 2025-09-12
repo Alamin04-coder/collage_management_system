@@ -33,6 +33,7 @@
     .navbar-custom .dropdown-menu {
         border-radius: 8px;
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+
     }
 
     /* Optional: Small Screen Adjustments */
@@ -52,7 +53,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <!-- Profile Dropdown -->
+                
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="{{ asset('images/logo2.png') }}" alt="Profile" class="rounded-circle me-2" width="35" height="35">
