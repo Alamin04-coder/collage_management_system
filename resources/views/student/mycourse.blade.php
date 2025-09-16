@@ -99,71 +99,25 @@
 
 <body>
     <div class="container dashboard-container">
-        <div class="text-center mb-5">
-            <h1 class="dashboard-title">🎓 Welcome, {{ Auth::user()->student->name ?? 'alamin' }}!</h1>
-            <p class="lead">Here's your personalized student dashboard</p>
-        </div>
-
-        <!-- Profile Card -->
-        <div class="profile-card mx-auto col-md-6">
-            <img src="{{isset($student)&&$student->image ? asset('student_images/'.$student->image) 
-            :asset('images/logo.png')}}"
-                alt="Profile Picture"
-                class="profile-img">
-            <h3>{{ Auth::user()->name }}</h3>
-            <p class="mb-1"><strong>Email:</strong> {{ Auth::user()->email ?? 'aalami' }}</p>
-            <p class="mb-1"><strong>Role:</strong> {{ Auth::user()->role ?? 'none' }}</p>
-        </div>
+        
 
         <!-- student dashboard -->
         <div class="card-grid">
-            <a href="{{route('enroll')}}">
+            <a href="{{route('course.list')}}">
             <div class="feature-card">
                 <i class="bi bi-book"></i>
-                <h5>Courses</h5>
+                <h5>ALL Courses</h5>
                 <p>Click Here for view all courses</p>
             </div>
             </a>
+
+            <a href="#">
             <div class="feature-card">
                 <i class="bi bi-card-checklist"></i>
-                <h5>Assignments</h5>
-                <p>Check pending and submitted assignments</p>
+                <h5>My Course</h5>
+                <p>click here for view your courses details </p>
             </div>
-            <div class="feature-card">
-                <i class="bi bi-bar-chart-line"></i>
-                <h5>Results</h5>
-                <p>Track your academic performance</p>
-            </div>
-            <div class="feature-card">
-                <i class="bi bi-chat-dots"></i>
-                <h5>Messages</h5>
-                <p>Communicate with your teachers</p>
-            </div>
-            <div class="feature-card">
-                <i class="bi bi-calendar-event"></i>
-                <h5>Events</h5>
-                <p>Stay updated with upcoming events</p>
-            </div>
-            <a href="{{route('update.profile')}}">
-                <div class="feature-card">
-
-                    <i class="bi bi-gear"></i>
-                    <h5>Settings</h5>
-                    <p>Update your profile and preferences</p>
-
-                </div>
-            </a>
-
-            <a href="{{ route('logout') }}"
-                onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                <div class="feature-card">
-                    <i class="bi bi-box-arrow-left"></i>
-
-                    <h5>Logout</h5>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
-                    <p> click here for exit your account</p>
-                </div>
-            </a>
+            </a>            
         </div>
     </div>
 </body>

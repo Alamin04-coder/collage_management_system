@@ -111,7 +111,7 @@
       <p><span class="profile-title">Course code:</span> {{$course->department ?? 'not found'}}</p>
       <p><span class="profile-title">Course time:</span> {{$course->course_time ?? 'not found'}}</p>
       <p><span class="profile-title">Course Description:</span> {{$course->description ?? 'not found'}}</p>
-      <p><span class="profile-title">Teacher name:</span> {{$course->teacher_id ?? 'not found'}}</p>
+      <p><span class="profile-title">Teacher name:</span> {{$course->teacher->name ?? 'not found'}}</p>
      
       <p><span class="profile-title">course Created:</span>
         {{ $course->created_at ? $course->created_at->format('d M Y, h:i A') : 'not found' }}

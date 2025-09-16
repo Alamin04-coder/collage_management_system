@@ -31,7 +31,14 @@ class studentController extends Controller
      */
     public function store(UserRequests $request)
     {
+
         $validatedData = $request->validated();
+
+        if (Auth::user()->role !== "admin") {
+            if (student::where('user_id', Auth::id())->exists()) {
+                return redirect()->back()->with('error', 'you already added your information');
+            }
+        }
 
         $imageName = null;
         if ($request->hasFile('image')) {

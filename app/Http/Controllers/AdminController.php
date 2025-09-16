@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\course;
+use App\Models\CourseEnrollment;
 use App\Models\student;
 use App\Models\teacher;
 use App\Models\User;
-// use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +15,6 @@ use Illuminate\Validation\Rules\Password;
 
 class AdminController extends Controller
 {
-    // Dashboard
     public function index()
     {
         $totalStudent = student::count();
@@ -25,7 +24,7 @@ class AdminController extends Controller
 
         return view("admin.dashboard", compact('totalStudent', 'totalTeacher', 'totalUser', 'totalCourse'));
     }
-    // Show all students with search and pagination
+    
     public function show_student(Request $request)
     {
         $search = $request->input('search');
@@ -51,7 +50,7 @@ class AdminController extends Controller
     public function show_teacher(Request $request)
     {
         $search = $request->input('search');
-        $teachers = teacher::query(); // student::query() → teacher::query()
+        $teachers = teacher::query(); 
         try {
             if ($search) {
                 $teachers->where('name', 'like', "%{$search}%")
@@ -80,7 +79,7 @@ class AdminController extends Controller
             }
             $users = $users->paginate(10);
             $users->appends(['search' => $search]);
-            return view('user.test', compact('users', 'search'));
+            return view('user.AllUser', compact('users', 'search'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'users not found !' . $e->getMessage());
         }
@@ -163,5 +162,29 @@ class AdminController extends Controller
     public function role()
     {
         return view('auth.choiceRole');
+    }
+
+
+
+    public function enrollStudent(Request $req){
+        $search = $req->input('search');
+        $course = CourseEnrollment::query();
+
+        try{
+            if($search){
+                $course->where('course_id','like',"%{$search}%")
+                ->orWhere('teacher_id','like',"%{$search}%")
+                ->orWhere('student_id','like',"%{$search}%");
+            }
+
+            $course =$course->paginate(5);
+            $course->appends(['search'=>$search]);
+            return view('course.enrolledStudent',compact('search','course'));
+
+        }catch(\Exception $e){
+
+            return redirect()->back()->with('error','invalid request'.$e->getMessage());
+        }
+        
     }
 }

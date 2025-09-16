@@ -130,7 +130,7 @@
 
       <div class="form-group">
         <select id="teacher" name="teacher_id" required>
-          <option value="{{$course->teacher_id}}">Select teacher</option>
+          <option value="{{$course->teacher->id}}">{{$course->teacher->name}}</option>
           @if($teachers && count($teachers) > 0)
           @foreach($teachers as $teacher)
           <option value="{{$teacher->id}}">{{$teacher->name}}</option>

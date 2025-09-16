@@ -3,20 +3,19 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\Enrollment;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\teacherController;
 use App\Http\Middleware\userRole;
-
+use App\Models\course;
 
 Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
 
 // Profile routes for authenticated users with any role
 Route::middleware('auth')->group(function () {
@@ -39,7 +38,7 @@ Route::middleware(['auth', 'role:student,admin'])->group(function () {
 
 // teacher and admin can access this route 
 
-Route::middleware(['auth', 'role:admin,teacher'])->group(function () {
+Route::middleware(['auth', 'role:admin,teacher,student'])->group(function () {
     Route::controller(TeacherController::class)->group(function () {
 
         Route::get('/teacher/info', 'create')->name('teacher.info');
@@ -108,8 +107,12 @@ Route::middleware(['auth', 'role:teacher'])->group(function () {
 });
 
 
+Route::get('/course{id}',[Enrollment::class,'show'])->name('course');
+Route::post('/course/post',[Enrollment::class,'store'])->name('enroll.course');
+Route::get('/myCourse',[Enrollment::class,'index'])->name('enroll');
+Route::get('/cou',[Enrollment::class,'studentEnroll_course'])->name('coc');
 
-
+Route::get('/enroll',[AdminController::class,'enrollStudent'])->name('enrolled');
 
 
 

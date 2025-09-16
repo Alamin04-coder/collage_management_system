@@ -11,6 +11,8 @@ class CourseEnrollment extends Model
         'course_id',
         'teacher_id',
         'student_id',
+        'phone',
+        'email',
     ];
 
     public function course()

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Symfony\Contracts\Service\Attribute\Required;
 
 class UserRequests extends FormRequest
 {
@@ -80,6 +81,18 @@ class UserRequests extends FormRequest
                         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
                     ];
                     break;
+
+                    case "course_enroll":
+
+                        return[
+
+                            'teacher_id' =>'required|max:3',
+                            'course_id'=>'required|max:6',
+                            'student_id'=>'required|max:4',
+                            'email' =>'required|email',
+                            'phone' =>'required',
+
+                        ];
 
                     default:
                         return [];

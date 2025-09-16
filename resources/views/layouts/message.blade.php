@@ -33,6 +33,15 @@
 </div>
 @endif
 
+@if(session('error'))
+<div id="info-alert" class="alert alert-info alert-dismissible fade show text-center mx-auto shadow-lg"
+     style="width: 400px; animation: pulse 1.2s infinite; border-left: 5px solid #0dcaf0;">
+    <i class="bi bi-info-circle-fill me-2 fs-5"></i>
+    {{ session('error') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+
 <style>
 /* Animations */
 @keyframes slideIn {

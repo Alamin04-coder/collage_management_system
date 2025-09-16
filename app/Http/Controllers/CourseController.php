@@ -8,7 +8,7 @@ use App\Models\teacher;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use PhpParser\Node\Stmt\ElseIf_;
+
 
 class CourseController extends Controller
 {
@@ -22,7 +22,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        $teachers = User::where('role', 'teacher')->get();
+        $teachers =teacher::all();
         return view('course.create', compact('teachers'));
     }
 
@@ -61,7 +61,7 @@ class CourseController extends Controller
             abort(403, 'unauthorized action');
         }
 
-        $teachers = User::where('role', 'teacher')->get();
+        $teachers = teacher::all();
 
         return view('course.edit', compact('course', 'teachers'));
     }

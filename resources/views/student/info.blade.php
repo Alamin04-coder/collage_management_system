@@ -80,7 +80,6 @@
                 <h2>Complete Your Profile</h2>
             </div>
                 @include('layouts.message') 
-
             <form action="{{route('student.store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
 

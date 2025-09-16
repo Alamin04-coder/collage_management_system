@@ -17,7 +17,7 @@
         transition: all 0.3s ease;
     }
 
-    /* যখন sidebar থাকবে তখন */
+   
     .with-sidebar .main-content {
         margin-left: 220px;
     }
@@ -108,10 +108,15 @@
     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
         <h1 class="mb-0">📚 Course List</h1>
 
-        @if(Auth::user()->role === 'admin' || Auth::user()->role === 'teacher')
+        @if(Auth::user()->role !== 'student')
+        <a href="{{ route('create.course.page') }}" class="btn btn-primary mb-2 mb-lg-0">
+           Enrolled Students
+        </a>
         <a href="{{ route('create.course.page') }}" class="btn btn-primary mb-2 mb-lg-0">
             ➕ Add Course
         </a>
+
+        
         @endif
 
         <form action="{{ route('course.list') }}" method="get" class="d-flex flex-wrap mt-2 mt-lg-0" style="gap: 8px;">
@@ -143,8 +148,13 @@
                             <th>Time</th>
                             <th>Description</th>
                             <th>View</th>
+                            @if(Auth::user()->role !=="student")
                             <th>Edit</th>
                             <th>Delete</th>
+                            @endif
+                            @if(Auth::user()->role ==="student")
+                            <th>Enroll</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -152,14 +162,15 @@
                         <tr>
                             <td>{{ $c_info->id }}</td>
                             <td>{{ $c_info->course_name }}</td>
-                            <td>{{ $c_info->teacher_id }}</td>
+                            <td>{{ $c_info->teacher ? $c_info->teacher->name : 'N/A' }}</td>
                             <td>{{ $c_info->course_fee }}</td>
                             <td>{{ $c_info->course_code }}</td>
                             <td>{{ $c_info->course_time }}</td>
                             <td>{{ $c_info->description }}</td>
                             <td>
-                                <a href="{{ route('single.course',$c_info->id) }}" class="btn btn-sm btn-info">View</a>
+                                <a href="{{ route('single.course',$c_info->id) }}" class="btn btn-sm btn-info">Details</a>
                             </td>
+                            @if(Auth::user()->role !== "student")
                             <td>
                                 <a href="{{ route('course.edit',$c_info->id) }}" class="btn btn-sm btn-warning">Edit</a>
                             </td>
@@ -171,6 +182,13 @@
                                         onclick="return confirm('Are you sure?')">Delete</button>
                                 </form>
                             </td>
+                            @endif
+
+                            @if(Auth::user()->role ==="student")
+                            <td>
+                                <a href="{{ route('course',$c_info->id) }}" class="btn btn-sm btn-info">Enroll Now</a>
+                            </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

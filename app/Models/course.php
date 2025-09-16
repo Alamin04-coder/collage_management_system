@@ -24,5 +24,8 @@ class course extends Model
     ->withPivot('teacher_id','id')
     ->timestamps();
    }
-
+  public function teacher()
+    {
+        return $this->belongsTo(Teacher::class, 'teacher_id');
+    }
 }
