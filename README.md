@@ -1,6 +1,6 @@
 # 🎓 Student Management System
 
-This project is built purely for learning purposes. It’s a simple multi-authentication system developed using Laravel, designed to help me explore and practice real-world web development concepts like role-based access control, route protection, and user management.
+This project is built purely for learning purposes. It’s a simple multi-authentication system developed using Laravel, designed to help explore and practice real-world web development concepts like role-based access control, route protection, and user management.
 
 ---
 
@@ -20,7 +20,7 @@ This project is built purely for learning purposes. It’s a simple multi-authen
 ## 🛠️ Tech Stack
 
 | Layer        | Technology        |
-|--------------|-------------------|
+|--------------|------------------|
 | Backend      | Laravel 12+       |
 | Frontend     | Blade + Bootstrap |
 | Database     | MySQL             |
@@ -41,18 +41,27 @@ cp .env.example .env
 php artisan key:generate
 php artisan migrate
 php artisan serve
-
-
+```
 Learning Goals
-This project helped me practice:
-- Laravel route grouping and middleware
-- Multi-role access control
-- Controller structure and resource management
-- Flash alerts and user feedback
-- Real-world debugging and code organization
 
+This project helped me practice:
+
+Laravel route grouping and middleware
+
+Multi-role access control
+
+Controller structure and resource management
+
+Flash alerts and user feedback
+
+Real-world debugging and code organization
 
 Acknowledgements
-Special thanks to the Laravel community and documentation for guidance.
-This project is not intended for production use—it's a personal learning sandbox.
 
+Special thanks to the Laravel community and documentation for guidance.
+This project is not intended for production use—it’s a personal learning sandbox.
+
+
+##Screenshot<p align="center">
+  <img src="imagesGitReadme/admin_course.jpg" alt="Dashboard" width="800">
+</p>
