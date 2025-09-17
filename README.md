@@ -62,6 +62,46 @@ Special thanks to the Laravel community and documentation for guidance.
 This project is not intended for production use—it’s a personal learning sandbox.
 
 
-##Screenshot<p align="center">
-  <img src="public/imagesGitReadme/admin_course.jpg" alt="Dashboard" width="800">
+##Screenshot
+## 🖼️ Screenshots
+
+<p align="center">
+
+  <a href="public/imagesGitReadme/admin_dashboard.jpg" target="_blank">
+    <img src="public/imagesGitReadme/admin_dashboard.jpg" alt="Admin Dashboard" width="300" title="Admin Dashboard" style="margin:10px">
+  </a>
+
+  <a href="public/imagesGitReadme/admin_course.jpg" target="_blank">
+    <img src="public/imagesGitReadme/admin_course.jpg" alt="Admin Courses" width="300" title="Admin Courses" style="margin:10px">
+  </a>
+
+  <a href="public/imagesGitReadme/admin_student.jpg" target="_blank">
+    <img src="public/imagesGitReadme/admin_student.jpg" alt="Admin Student Management" width="300" title="Admin Student Management" style="margin:10px">
+  </a>
+
+  <a href="public/imagesGitReadme/dashboard.jpg" target="_blank">
+    <img src="public/imagesGitReadme/dashboard.jpg" alt="Dashboard" width="300" title="Dashboard" style="margin:10px">
+  </a>
+
+  <a href="public/imagesGitReadme/dashboard-with-notice.jpg" target="_blank">
+    <img src="public/imagesGitReadme/dashboard-with-notice.jpg" alt="Dashboard with Notice" width="300" title="Dashboard with Notice" style="margin:10px">
+  </a>
+
+  <a href="public/imagesGitReadme/enrolled course.jpg" target="_blank">
+    <img src="public/imagesGitReadme/enrolled course.jpg" alt="Enrolled Course" width="300" title="Enrolled Course" style="margin:10px">
+  </a>
+
+  <a href="public/imagesGitReadme/student-dashboard.jpg" target="_blank">
+    <img src="public/imagesGitReadme/student-dashboard.jpg" alt="Student Dashboard" width="300" title="Student Dashboard" style="margin:10px">
+  </a>
+
+  <a href="public/imagesGitReadme/student-dashboard-footer.jpg" target="_blank">
+    <img src="public/imagesGitReadme/student-dashboard-footer.jpg" alt="Student Dashboard Footer" width="300" title="Student Dashboard Footer" style="margin:10px">
+  </a>
+
+  <a href="public/imagesGitReadme/user.jpg" target="_blank">
+    <img src="public/imagesGitReadme/user.jpg" alt="User Profile" width="300" title="User Profile" style="margin:10px">
+  </a>
+
 </p>
+
