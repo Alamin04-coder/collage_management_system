@@ -141,7 +141,9 @@
                   <th>Title</th>
                   <th>Description</th>
                   <th>Published Date</th>
-                  <th>Action</th>
+                  <th>View</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
                 </tr>
               </thead>
               <tbody>
@@ -152,17 +154,22 @@
                     <td>{{ Str::limit($notice->description, 50) }}</td>
                     <td>{{ $notice->created_at->format('d M, Y') }}</td>
                     <td>
-                      <div class="action-buttons d-inline-flex gap-1 flex-wrap">
+                     
                         <a href="#" class="btn btn-sm btn-info">Details</a>
+                    </td>
 
                         @if(Auth::user()->role !== "student")
+                        <td>
                           <a href="{{ route('notice.edit',$notice->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                          </td>
+                          <td>
                           <form action="{{ route('notice.destroy',$notice->id) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger"
                               onclick="return confirm('Are you sure?')">Delete</button>
                           </form>
+                          </td>
                         @endif
                       </div>
                     </td>

@@ -149,7 +149,15 @@
                                 <th>Code</th>
                                 <th>Time</th>
                                 <th>Description</th>
-                                <th>action</th>
+                                <th>view</th>
+                                @if(Auth::user()->role!=="student")
+                                <th>edit</th>
+                                <th>delete</th>
+                                @endif
+                                @if(Auth::user()->role==="student")
+                                <th>Enroll now</th>
+                                @endif
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -164,10 +172,14 @@
                                 <td>{{ $c_info->description }}</td>
                                 <td>
                                     <a href="{{ route('single.course',$c_info->id) }}" class="btn btn-sm btn-info">Details</a>
+                                </td>
 
-                                    @if(Auth::user()->role !== "student")
+                                @if(Auth::user()->role !== "student")
 
+                                <td>
                                     <a href="{{ route('course.edit',$c_info->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                </td>
+                                <td>
                                     <form action="{{ route('course.destroy',$c_info->id) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
@@ -176,8 +188,11 @@
                                     </form>
 
                                     @endif
+                                </td>
 
-                                    @if(Auth::user()->role ==="student")
+
+                                @if(Auth::user()->role ==="student")
+                                <td>
 
                                     <a href="{{ route('course',$c_info->id) }}" class="btn btn-sm btn-info">Enroll Now</a>
 

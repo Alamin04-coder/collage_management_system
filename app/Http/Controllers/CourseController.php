@@ -122,7 +122,7 @@ class CourseController extends Controller
 
         try {
             $course = $course->where('course_name', 'like', "%{$search}%")
-                ->orWhere("Course_code", "like", "%{$search}%")
+                ->orWhere("course_code", "like", "%{$search}%")
                 ->orWhere("course_fee", "like", "%{$search}%");
             $course = $course->paginate(10);
             $course->appends(['search' => $search]);

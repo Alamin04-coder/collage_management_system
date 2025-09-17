@@ -168,7 +168,8 @@
                 <div class="feature-card">
                     <i class="bi bi-book"></i>
                     <h5>Courses</h5>
-                    <p>Click Here for view all courses</p>
+                    <p>Click Here for view all courses</p><br>
+
                 </div>
             </a>
             <div class="feature-card">
@@ -202,7 +203,7 @@
 
                     <h5>Logout</h5>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
-                    <p> click here for exit your account</p>
+                    <p> click here for exit your account</p><br>
                 </div>
             </a>
         </div>
