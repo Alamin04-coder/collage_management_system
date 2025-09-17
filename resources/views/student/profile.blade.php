@@ -1,3 +1,7 @@
+@extends('layouts.default')
+@section('title', 'student profile')
+
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,12 +31,15 @@
   </style>
 </head>
 
-<body class="bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 min-h-screen flex items-center justify-center p-6">
+  @include('layouts.navbar')
+  <div class="bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 min-h-screen flex flex-col items-center p-6">
 
-    @include('layouts.message') 
+    @include('layouts.message')
 
-
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
+    <!-- Wrapper for centering the grid -->
+    <div class="w-full max-w-6xl flex justify-center items-center">
+      <!-- Grid for cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
     <!-- Student Info Card -->
     <div class="card bg-white/70 backdrop-blur-md rounded-2xl shadow-xl p-6 flex flex-col items-center text-center border border-white/30">
       <img src="{{isset($student) && $student->image ? asset('student_images/'.$student->image) : asset('images/logo.png')}}" alt="student image"
@@ -47,17 +54,6 @@
       </a>
     </div>
 
-    <!-- User Info Card -->
-    <div class="card bg-white/70 backdrop-blur-md rounded-2xl shadow-xl p-6 flex flex-col items-center text-center border border-white/30">
-      <img src="{{ asset('images/image.png') ?? 'no image'}}" alt="User"
-        class="rounded-full w-32 h-32 mb-4 shadow-md">
-      <h2 class="text-2xl font-bold text-gray-800 mb-2">👤 User Info</h2>
-      <p class="text-gray-600 mb-4">Update your username, email, and password.</p>
-      <a href="{{route('admin.user.edit',Auth::user()->id)}}">
-        <button
-          class="px-5 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg shadow-md transition duration-300">Update Details</button>
-      </a>
-    </div>
 
     <!-- Your Information -->
     <div class="card bg-white/70 backdrop-blur-md rounded-2xl shadow-xl p-6 flex flex-col items-center text-center border border-white/30">
@@ -74,3 +70,4 @@
 </body>
 
 </html>
+@endsection

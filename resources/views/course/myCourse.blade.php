@@ -94,138 +94,69 @@
             text-decoration: none;
 
         }
-
-        .notice-banner {
-            background: blueviolet;
-            color: #000;
-            overflow: hidden;
-            white-space: nowrap;
-            padding: 10px 0;
-            font-weight: bold;
-            font-size: 1rem;
-        }
-
-        .notice-track {
-            display: inline-block;
-            padding-left: 100%;
-            animation: scrollNotice 50s linear infinite;
-        }
-
-        .notice-item {
-            display: inline-block;
-            margin-right: 50px;
-        }
-
-
-        @keyframes scrollNotice {
-            0% {
-                transform: translateX(0%);
-            }
-
-            100% {
-                transform: translateX(-100%);
-            }
-
-        }
     </style>
 </head>
 
 <body>
     @include('layouts.navbar')
-
-    @if(isset($notices) && $notices->isNotEmpty())
-    <div class="notice-banner">
-        <div class="notice-track">
-            @foreach($notices as $notice)
-            <span class="notice-item">{{ $notice->title }} - {{ Str::limit($notice->description, 100)}} - Published Time {{ $notice->created_at->format('d M, Y') }}</span>
-            @endforeach
-        </div>
-    </div>
-    @endif
     <div class="container dashboard-container">
 
 
-
-        <div class="text-center mb-5">
-            <h1 class="dashboard-title">🎓 Welcome, {{ Auth::user()->student->name ?? 'alamin' }}!</h1>
-            <p class="lead">Here's your personalized student dashboard</p>
-        </div>
-
-        <!-- Profile Card -->
-        <div class="profile-card mx-auto col-md-6">
-            <img src="{{isset($student)&&$student->image ? asset('student_images/'.$student->image) 
-            :asset('images/logo.png')}}"
-                alt="Profile Picture"
-                class="profile-img">
-            <h3>{{ Auth::user()->name }}</h3>
-            <p class="mb-1"><strong>Email:</strong> {{ Auth::user()->email ?? 'aalami' }}</p>
-            <p class="mb-1"><strong>Role:</strong> {{ Auth::user()->role ?? 'none' }}</p>
-        </div>
-
         <!-- student dashboard -->
         <div class="card-grid">
-            <a href="{{route('myCourse')}}">
+            <a href="{{route('course.list')}}">
                 <div class="feature-card">
                     <i class="bi bi-book"></i>
-                    <h5>Courses</h5>
+                    <h5>ALL Courses</h5>
                     <p>Click Here for view all courses</p>
                 </div>
             </a>
-            <div class="feature-card">
-                <i class="bi bi-card-checklist"></i>
-                <h5>Assignments</h5>
-                <p>Check pending and submitted assignments</p>
-            </div>
-            <div class="feature-card">
-                <i class="bi bi-bar-chart-line"></i>
-                <h5>Results</h5>
-                <p>Track your academic performance</p>
-            </div>
-            <div class="feature-card">
-                <i class="bi bi-chat-dots"></i>
-                <h5>Messages</h5>
-                <p>Communicate with your teachers</p>
-            </div>
+
             <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#noticeModal">
                 <div class="feature-card">
-                    <i class="bi bi-calendar-event"></i>
-                    <h5>Events</h5>
-                    <p>Stay updated with upcoming events</p>
-                </div>
-            </a>
-
-
-            <a href="{{ route('logout') }}"
-                onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                <div class="feature-card">
-                    <i class="bi bi-box-arrow-left"></i>
-
-                    <h5>Logout</h5>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
-                    <p> click here for exit your account</p>
+                    <i class="bi bi-card-checklist"></i>
+                    <h5>My Course</h5>
+                    <p>click here for view your courses details </p>
                 </div>
             </a>
         </div>
+
         <div class="modal fade" id="noticeModal" tabindex="-1" aria-labelledby="noticeModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header bg-warning text-dark">
-                        <h5 class="modal-title" id="noticeModalLabel">Latest Notices</h5>
+                        <h5 class="modal-title" id="noticeModalLabel">{{Auth::user()->name}},Course</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        @if(isset($allNotice) && $allNotice->count())
+                        @if(isset($courses) && $courses->count())
                         <ul class="list-group">
-                            @foreach($allNotice as $notice1)
+                            @foreach($courses as $course)
+                            @if(Auth::user()->role === "student")
                             <li class="list-group-item">
-                                <h6>{{ $notice1->title }}</h6><br>
-                                <p>{{ $notice1->description }}</p>
-                                <p>Published date :{{ $notice1->created_at->format('d M, Y h:i A') }}</p>
+                                
+                                <p>Course Name:-{{$course->course ? $course->course->course_name : "not found"}}</p>
+                                <p>Description :-{{$course->course ? $course->course->description : "not found"}}</p>
+                                <p>Teacher Name :-{{$course->teacher ? $course->teacher->name : 'not found'}}</p>
+                                <p>Enrolled date:-{{$course->created_at->format('d M Y') ?? 'not found' }}</p>
                             </li>
+                            @elseif(Auth::user()->role === "teacher")
+                            
+                            <li class="list-group-item">
+                                <p>{{$course->course_name ?? "not found"}}</p>
+                                <p>{{$course->description ?? "not found"}}</p>
+                                <p>{{$course->course_fee ?? 'not found'}}</p>
+                                <p>{{$course->course_code ?? 'not found'}}</p>
+                                <p>{{$course->created_at->format('d M Y') ?? 'not found' }}</p>
+                                <a href="{{route('course.edit',$course->id)}}" class="btn btn-sm btn-warning">Edit</a>
+
+
+                            </li>
+                            @endif
                             @endforeach
                         </ul>
                         @else
-                        <p>No notices available.</p>
+                        <p style="color: #667eea; text-align:center;">No course available.</p>
                         @endif
                     </div>
                     <div class="modal-footer">
@@ -235,7 +166,5 @@
             </div>
         </div>
     </div>
-
-
 </body>
 @endsection

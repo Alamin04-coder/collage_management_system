@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequests;
+use App\Models\Notice;
 use App\Models\teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +16,8 @@ class teacherController extends Controller
     public function index()
     {
         $teacher = Auth::user()->teacher;
-        return view("teachers.dashboard", compact("teacher"));
+        $notices = Notice::latest()->take(2)->get();
+        return view("teachers.dashboard", compact("teacher","notices"));
     }
     /**
      * Show the form for creating a new resource.

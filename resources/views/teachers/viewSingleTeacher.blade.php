@@ -137,7 +137,7 @@
             <p><span class="profile-title">Specialization:</span> {{$teacher->specialization ?? 'not found'}}</p>
             <p><span class="profile-title">Address:</span> {{$teacher->address ?? 'not found'}}</p>
             <p><span class="profile-title">Joining Date:</span> {{$teacher->join_date ?? 'not found'}}</p>
-            <p><span class="profile-title">Role:</span> {{$teacher->user->role}}</p>
+            <!-- <p><span class="profile-title">Role:</span> {{$teacher->user->role ??'not define'}}</p> -->
             <p><span class="profile-title">Account Created:</span>
                 {{ Auth::user()->created_at->format('d M Y, h:i A') ?? 'not found' }}
             </p>

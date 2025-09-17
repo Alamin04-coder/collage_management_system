@@ -15,14 +15,17 @@ class CourseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() {}
+    public function index() {
+
+       
+    }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        $teachers =teacher::all();
+        $teachers = teacher::all();
         return view('course.create', compact('teachers'));
     }
 
@@ -32,13 +35,14 @@ class CourseController extends Controller
     public function store(UserRequests $request)
     {
 
-        $validatedData =  $request->validated();
-        course::create($validatedData);
-        if (Auth::user()->role == 'admin') {
+        $role = Auth::user()->role;
+
+        if ($role === 'admin' || $role === "teacher") {
+            $validatedData =  $request->validated();
+            course::create($validatedData);
             return redirect()->route('course.list')->with('success', 'Course successfully added ');
-        } else {
-            return redirect()->route('teacher.dashboard')->with('success', 'add successfully ');
         }
+        return redirect()->back()->with('error','you can not create course');
     }
 
     /**
@@ -79,9 +83,14 @@ class CourseController extends Controller
                 $change[$key] = $value;
             }
         }
+        if ($course->teacher_id != Auth::user()->id && Auth::user()->role !== 'admin') {
+            abort(403, 'Unauthorized Action');
+        }
+
+        $role = Auth::user()->role;
         if (!empty($change)) {
             $course->update($change);
-            if (Auth::user()->role === 'admin') {
+            if ($role === 'admin' || $role === 'teacher') {
                 return redirect()->route('course.list')->with('success', 'course data updated');
             } else {
                 return redirect()->back()->with('success', 'course data updated');

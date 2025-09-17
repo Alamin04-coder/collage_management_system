@@ -101,13 +101,57 @@
             text-decoration: none;
 
         }
+
+        .notice-banner {
+            background: blueviolet;
+            color: #000;
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 10px 0;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .notice-track {
+            display: inline-block;
+            padding-left: 100%;
+            animation: scrollNotice 30s linear infinite;
+        }
+
+        .notice-item {
+            display: inline-block;
+            margin-right: 50px;
+        }
+
+
+        @keyframes scrollNotice {
+            0% {
+                transform: translateX(0%);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+
+        }
     </style>
 </head>
 
 <body>
-    <div class="container dashboard-container">
-    @include('layouts.message') 
 
+    @include('layouts.navbar')
+    @if(isset($notices) && $notices->isNotEmpty())
+    <div class="notice-banner">
+        <div class="notice-track">
+            @foreach($notices as $notice)
+            <span class="notice-item">{{ $notice->title }} - {{ Str::limit($notice->description, 100)}} - Published Time {{ $notice->created_at->format('d M, Y') }}</span>
+            @endforeach
+        </div>
+    </div>
+    @endif
+
+    <div class="container dashboard-container">
+        @include('layouts.message')
 
         <div class="text-center mb-5">
             <h1 class="dashboard-title">🎓 Welcome, {{ Auth::user()->teacher->name ?? 'alamin' }}!</h1>
@@ -127,7 +171,7 @@
 
         <!-- Dashboard Features -->
         <div class="card-grid">
-            <a href="{{route('course.list')}}">
+            <a href="{{route('myCourse')}}">
                 <div class="feature-card">
                     <i class="bi bi-book"></i>
                     <h5>My Courses</h5>
@@ -144,25 +188,19 @@
                 <h5>Results</h5>
                 <p>Track your academic performance</p>
             </div>
+            <a href="#">
             <div class="feature-card">
                 <i class="bi bi-chat-dots"></i>
                 <h5>Messages</h5>
                 <p>Communicate with your teachers</p>
             </div>
+            </a>
             <div class="feature-card">
                 <i class="bi bi-calendar-event"></i>
                 <h5>Events</h5>
                 <p>Stay updated with upcoming events</p>
             </div>
-            <a href="{{route('teacher.update.profile')}}">
-                <div class="feature-card">
 
-                    <i class="bi bi-gear"></i>
-                    <h5>Settings</h5>
-                    <p>Update your profile and preferences</p>
-
-                </div>
-            </a>
             <a href="{{ route('logout') }}"
                 onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                 <div class="feature-card">

@@ -124,7 +124,7 @@
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
         <div class="col-md-4">
             <div class="form-card">
-                <h2 class="text-center mb-4">Register Form</h2>
+                <h2 class="text-center mb-4">User update Form</h2>
 
               @include('layouts.message') 
 
@@ -160,25 +160,10 @@
                     @if(Auth::user()->role ==='student' || Auth::user()->role ==='teacher')
                     <div class="form-floating mb-3 position-relative">
                         <input type="password" class="form-control" id="password" name="current_password" placeholder="Password">
-                        <label for="password">Old Password</label>
+                        <label for="password"> Password</label>
                         <i class="fa-solid fa-eye password-toggle" onclick="togglePassword('password', this)"></i>
                         <div class="error-text" style="color: red">@error('password') {{ $message }} @enderror</div>
                     </div>
-
-
-                    <div class="form-floating mb-3 position-relative">
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-                        <label for="password">New Password</label>
-                        <i class="fa-solid fa-eye password-toggle" onclick="togglePassword('password', this)"></i>
-                        <div class="error-text" style="color: red">@error('password') {{ $message }} @enderror</div>
-                    </div>
-                    <div class="form-floating mb-3 position-relative">
-                        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password">
-                        <label for="password_confirmation">Confirm Password</label>
-                        <i class="fa-solid fa-eye password-toggle" onclick="togglePassword('password_confirmation', this)"></i>
-                        <div class="error-text" style="color: red">@error('password_confirmation') {{ $message }} @enderror</div>
-                    </div>
-
                     @endif
 
                     @if(Auth::user()->role === 'admin')

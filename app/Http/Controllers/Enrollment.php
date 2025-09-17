@@ -15,7 +15,22 @@ class Enrollment extends Controller
      */
     public function index()
     {
-        return view('student.mycourse');
+        $role = Auth::user()->role;
+        if ($role === "student") {
+            $student = Auth::user()->student;
+            if(!empty($student && $student->id)){
+            $courses = CourseEnrollment::where('student_id', $student->id)->get();
+            return view('course.myCourse', compact('courses'));
+            }
+            return redirect()->route('student.info')->with('error','Your profile is not complete !');
+        } elseif ($role === "teacher") {
+            $teacher = Auth::user()->teacher;
+            if (!empty($teacher && $teacher->id)) {
+                $courses = course::where('teacher_id', $teacher->id)->get();
+                return view('course.myCourse', compact('courses'));
+            }
+            return redirect()->route('teacher.info')->with('error','Your profile is not complete !');
+        }
     }
 
     /**
@@ -33,10 +48,8 @@ class Enrollment extends Controller
     {
         $validatedData = $request->validated();
 
-       CourseEnrollment::create($validatedData);
+        CourseEnrollment::create($validatedData);
         return redirect()->route('course.list');
-
-        
     }
 
     /**
@@ -46,20 +59,15 @@ class Enrollment extends Controller
     {
         $course = Course::findOrFail($id);
 
-        return view('course.index',compact('course'));
+        return view('course.index', compact('course'));
     }
-    public function studentEnroll_course(){
+    public function studentEnroll_course()
+    {
 
         $student = Auth::user()->student;
 
         $course = $student->courses;
         $total = $course->count();
         return $total;
-
-
-
-        
-
     }
-
 }

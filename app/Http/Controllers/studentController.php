@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequests;
+use App\Models\Notice;
 use App\Models\student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +16,9 @@ class studentController extends Controller
     public function index()
     {
         $student = Auth::user()->student;
-        return view("student.dashboard", compact("student"));
+        $notices = Notice::latest()->take(2)->get();
+        $allNotice = Notice::latest()->get();
+        return view("student.dashboard", compact("student","notices","allNotice"));
     }
 
     /**

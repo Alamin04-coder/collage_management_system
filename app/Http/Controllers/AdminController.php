@@ -111,7 +111,7 @@ class AdminController extends Controller
             $roles['role'] = 'required|string|in:admin,teacher,student';
         }
 
-        if ($user->id === Auth::id()) {
+        if ($user->id === Auth::id() && Auth::user()->role !== "admin") {
             $roles['current_password'] = ['required', 'current_password'];
         }
 
@@ -140,7 +140,7 @@ class AdminController extends Controller
             if ($userRole === 'admin') {
                 return redirect()->route('users.list')->with('success', 'user data updated successfully');
             } elseif ($userRole === 'teacher') {
-                return redirect()->route('teacher.update.profile')->with('success', ' successfully updated your account');
+                return redirect()->route('teacher.dashboard')->with('success', ' successfully updated your account');
             } else {
                 return redirect()->route('student.dashboard')->with('success', ' successfully updated your account');
             }
@@ -187,4 +187,8 @@ class AdminController extends Controller
         }
         
     }
+
+
+    
 }
+

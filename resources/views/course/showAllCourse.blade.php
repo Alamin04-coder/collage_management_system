@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,203 +8,197 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-    body {
-        background-color: #f4f6f9;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    .main-content {
-        padding: 20px;
-        transition: all 0.3s ease;
-    }
-
-   
-    .with-sidebar .main-content {
-        margin-left: 220px;
-    }
-
-    @media (max-width: 991.98px) {
-        .with-sidebar .main-content {
-            margin-left: 0;
-            padding: 10px;
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-    }
 
-    h1 {
-        font-weight: bold;
-        color: #343a40;
-    }
+        .main-content {
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
 
-    .btn-primary {
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        font-weight: 500;
-    }
 
-    table th {
-        background-color: #343a40;
-        color: white;
-        text-align: center;
-    }
+        .with-sidebar .main-content {
+            margin-left: 220px;
+        }
 
-    table td {
-        vertical-align: middle;
-        text-align: center;
-    }
-
-    table tbody tr:hover {
-        background-color: #f8f9fa;
-        transition: 0.3s;
-    }
-
-    .card {
-        border: none;
-        border-radius: 12px;
-        overflow: hidden;
-    }
-
-    .card-body {
-        padding: 0;
-    }
-
-    .table-responsive {
-        padding: 20px;
-    }
-
-    .alert {
-        border-radius: 8px;
-    }
-
-    /* Responsive tweaks */
-    @media (max-width: 767.98px) {
-        .d-flex.justify-content-between {
-            flex-direction: column !important;
-            align-items: stretch !important;
-            gap: 10px;
+        @media (max-width: 991.98px) {
+            .with-sidebar .main-content {
+                margin-left: 0;
+                padding: 10px;
+            }
         }
 
         h1 {
-            font-size: 1.4rem;
-            text-align: center;
+            font-weight: bold;
+            color: #343a40;
         }
 
         .btn-primary {
-            width: 100%;
-            justify-content: center;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 500;
         }
-    }
-</style>
+
+        table th {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+        }
+
+        table td {
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        table tbody tr:hover {
+            background-color: #f8f9fa;
+            transition: 0.3s;
+        }
+
+        .card {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .card-body {
+            padding: 0;
+        }
+
+        .table-responsive {
+            padding: 20px;
+        }
+
+        .alert {
+            border-radius: 8px;
+        }
+
+        /* Responsive tweaks */
+        @media (max-width: 767.98px) {
+            .d-flex.justify-content-between {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 10px;
+            }
+
+            h1 {
+                font-size: 1.4rem;
+                text-align: center;
+            }
+
+            .btn-primary {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
 
 </head>
+
 <body>
 
-@if(Auth::user()->role === 'admin')
-   
+    @if(Auth::user()->role === 'admin')
+
     @include('layouts.sidebar')
-@endif
- @include('layouts.navbar')
+    @endif
+    @include('layouts.navbar')
 
-<div class="main-content">
-    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
-        <h1 class="mb-0">📚 Course List</h1>
+    <div class="main-content">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+            <h1 class="mb-0">📚 Course List</h1>
 
-        @if(Auth::user()->role !== 'student')
-        <a href="{{ route('create.course.page') }}" class="btn btn-primary mb-2 mb-lg-0">
-           Enrolled Students
-        </a>
-        <a href="{{ route('create.course.page') }}" class="btn btn-primary mb-2 mb-lg-0">
-            ➕ Add Course
-        </a>
+            @if(Auth::user()->role !== 'student')
+            <a href="{{ route('create.course.page') }}" class="btn btn-primary mb-2 mb-lg-0">
+                Enrolled Students
+            </a>
+            <a href="{{ route('create.course.page') }}" class="btn btn-primary mb-2 mb-lg-0">
+                ➕ Add Course
+            </a>
 
-        
-        @endif
 
-        <form action="{{ route('course.list') }}" method="get" class="d-flex flex-wrap mt-2 mt-lg-0" style="gap: 8px;">
-            <input type="text" name="search" class="form-control" 
-                placeholder="Search by Name, Code..." value="{{ $search }}">
-            <button type="submit" class="btn btn-outline-primary">Search</button>
-        </form>
-    </div>
+            @endif
 
-    <!-- Alerts -->
-    @include('layouts.message') 
+            <form action="{{ route('course.list') }}" method="get" class="d-flex flex-wrap mt-2 mt-lg-0" style="gap: 8px;">
+                <input type="text" name="search" class="form-control"
+                    placeholder="Search by Name, Code..." value="{{ $search }}">
+                <button type="submit" class="btn btn-outline-primary">Search</button>
+            </form>
+        </div>
 
-    @if($course->isEmpty())
+        <!-- Alerts -->
+        @include('layouts.message')
+
+        @if($course->isEmpty())
         <div class="alert alert-info text-center">
             No courses found.
         </div>
-    @else
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Teacher</th>
-                            <th>Fee</th>
-                            <th>Code</th>
-                            <th>Time</th>
-                            <th>Description</th>
-                            <th>View</th>
-                            @if(Auth::user()->role !=="student")
-                            <th>Edit</th>
-                            <th>Delete</th>
-                            @endif
-                            @if(Auth::user()->role ==="student")
-                            <th>Enroll</th>
-                            @endif
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($course as $c_info)
-                        <tr>
-                            <td>{{ $c_info->id }}</td>
-                            <td>{{ $c_info->course_name }}</td>
-                            <td>{{ $c_info->teacher ? $c_info->teacher->name : 'N/A' }}</td>
-                            <td>{{ $c_info->course_fee }}</td>
-                            <td>{{ $c_info->course_code }}</td>
-                            <td>{{ $c_info->course_time }}</td>
-                            <td>{{ $c_info->description }}</td>
-                            <td>
-                                <a href="{{ route('single.course',$c_info->id) }}" class="btn btn-sm btn-info">Details</a>
-                            </td>
-                            @if(Auth::user()->role !== "student")
-                            <td>
-                                <a href="{{ route('course.edit',$c_info->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                            </td>
-                            <td>
-                                <form action="{{ route('course.destroy',$c_info->id) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger"
-                                        onclick="return confirm('Are you sure?')">Delete</button>
-                                </form>
-                            </td>
-                            @endif
+        @else
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Teacher</th>
+                                <th>Fee</th>
+                                <th>Code</th>
+                                <th>Time</th>
+                                <th>Description</th>
+                                <th>action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($course as $c_info)
+                            <tr>
+                                <td>{{ $c_info->id }}</td>
+                                <td>{{ $c_info->course_name }}</td>
+                                <td>{{ $c_info->teacher ? $c_info->teacher->name : 'N/A' }}</td>
+                                <td>{{ $c_info->course_fee }}</td>
+                                <td>{{ $c_info->course_code }}</td>
+                                <td>{{ $c_info->course_time }}</td>
+                                <td>{{ $c_info->description }}</td>
+                                <td>
+                                    <a href="{{ route('single.course',$c_info->id) }}" class="btn btn-sm btn-info">Details</a>
 
-                            @if(Auth::user()->role ==="student")
-                            <td>
-                                <a href="{{ route('course',$c_info->id) }}" class="btn btn-sm btn-info">Enroll Now</a>
-                            </td>
-                            @endif
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                                    @if(Auth::user()->role !== "student")
+
+                                    <a href="{{ route('course.edit',$c_info->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                    <form action="{{ route('course.destroy',$c_info->id) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger"
+                                            onclick="return confirm('Are you sure?')">Delete</button>
+                                    </form>
+
+                                    @endif
+
+                                    @if(Auth::user()->role ==="student")
+
+                                    <a href="{{ route('course',$c_info->id) }}" class="btn btn-sm btn-info">Enroll Now</a>
+
+                                    @endif
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
+
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center mt-4">
+            {{ $course->links() }}
+        </div>
+        @endif
     </div>
 
-    <!-- Pagination -->
-    <div class="d-flex justify-content-center mt-4">
-        {{ $course->links() }}
-    </div>
-    @endif
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

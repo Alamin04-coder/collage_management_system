@@ -132,7 +132,9 @@
       <p><span class="profile-title">Board Roll:</span> {{$student->board_roll ?? 'not found'}}</p>
       <p><span class="profile-title">Registration No:</span> {{$student->registration_no ?? 'not found'}}</p>
       <p><span class="profile-title">Shift:</span> {{$student->shift ?? 'not found'}}</p>
+      @if(Auth::user()->role === 'student')
       <p><span class="profile-title">Role:</span> {{$student->user->role}}</p>
+      @endif
       <p><span class="profile-title">Account Created:</span>
         {{ $student->created_at ? $student->created_at->format('d M Y, h:i A') : 'not found' }}
       </p>

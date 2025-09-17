@@ -94,6 +94,14 @@ class UserRequests extends FormRequest
 
                         ];
 
+                    case 'notice':
+                        return[
+                            'title' => 'required|max:225|string',
+                            'description'=> 'required|max:500|string',
+                            
+                        ];
+
+
                     default:
                         return [];
         }

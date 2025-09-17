@@ -60,6 +60,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(Teacher::class);
     }
+
+    public function notice(){
+        return $this->hasMany(Notice::class);
+    }
   
 
     
