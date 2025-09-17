@@ -63,5 +63,5 @@ This project is not intended for production use—it’s a personal learning san
 
 
 ##Screenshot<p align="center">
-  <img src="imagesGitReadme/admin_course.jpg" alt="Dashboard" width="800">
+  <img src="public/imagesGitReadme/admin_course.jpg" alt="Dashboard" width="800">
 </p>
