@@ -41,3 +41,18 @@ cp .env.example .env
 php artisan key:generate
 php artisan migrate
 php artisan serve
+
+
+Learning Goals
+This project helped me practice:
+- Laravel route grouping and middleware
+- Multi-role access control
+- Controller structure and resource management
+- Flash alerts and user feedback
+- Real-world debugging and code organization
+
+
+Acknowledgements
+Special thanks to the Laravel community and documentation for guidance.
+This project is not intended for production use—it's a personal learning sandbox.
+
