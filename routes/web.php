@@ -8,9 +8,9 @@ use App\Http\Controllers\Enrollment;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\teacherController;
+use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
-use App\Models\course;
+use App\Models\Course;
 use App\Models\Notice;
 
 Route::get('/', function () {
@@ -90,7 +90,7 @@ Route::middleware(['auth', 'role:student'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:teacher'])->group(function () {
-    Route::controller(teacherController::class)->group(function () {
+    Route::controller(TeacherController::class)->group(function () {
         Route::get('/teacher/dashboard', 'index')->name('teacher.dashboard');
     });
 });
