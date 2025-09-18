@@ -53,7 +53,7 @@ Route::middleware(['auth', 'role:admin,teacher,student'])->group(function () {
 });
 
 // only admin can access this route
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware(['auth', 'role:admin,teacher'])->group(function () {
     Route::controller(AdminController::class)->group(function () {
         Route::get('/admin/dashboard', 'index')->name('admin.dashboard');
         Route::get('/admin/students', 'show_student')->name('admin.student.list');
