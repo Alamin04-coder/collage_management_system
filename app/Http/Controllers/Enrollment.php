@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequests;
-use App\Models\course;
+use App\Models\Course;
 use App\Models\CourseEnrollment;
-use App\Models\student;
+use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
 
 class Enrollment extends Controller
@@ -26,7 +26,7 @@ class Enrollment extends Controller
         } elseif ($role === "teacher") {
             $teacher = Auth::user()->teacher;
             if (!empty($teacher && $teacher->id)) {
-                $courses = course::where('teacher_id', $teacher->id)->get();
+                $courses = Course::where('teacher_id', $teacher->id)->get();
                 return view('course.myCourse', compact('courses'));
             }
             return redirect()->route('teacher.info')->with('error','Your profile is not complete !');
