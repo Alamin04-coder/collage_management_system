@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequests;
 use App\Models\Notice;
-use App\Models\student;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,7 +38,7 @@ class StudentController extends Controller
         $validatedData = $request->validated();
 
         if (Auth::user()->role !== "admin") {
-            if (student::where('user_id', Auth::id())->exists()) {
+            if (Student::where('user_id', Auth::id())->exists()) {
                 return redirect()->back()->with('error', 'you already added your information');
             }
         }
@@ -64,7 +64,7 @@ class StudentController extends Controller
      */
     public function show(string $id)
     {
-        $student = student::find($id);
+        $student = Student::find($id);
         return view('admin.viewSingleStudent', compact('student'));
     }
 
@@ -73,7 +73,7 @@ class StudentController extends Controller
      */
     public function edit(string $id)
     {
-        $students = student::find($id);
+        $students = Student::find($id);
         if (Auth::user()->role !== 'admin' && $students->user->id != Auth::id()) {
             abort(403, 'unauthorized action !');
         }
@@ -82,7 +82,7 @@ class StudentController extends Controller
 
     public function viewSingleStudent(string $id)
     {
-        $student = student::find($id);
+        $student = Student::find($id);
         return view('student.viewSingleStudent', compact('student'));
     }
 
@@ -133,7 +133,7 @@ class StudentController extends Controller
      */
     public function destroy(string $id)
     {
-        $student = student::findOrFail($id);
+        $student = Student::findOrFail($id);
         try {
             if ($student->image && file_exists(public_path('student_images/' . $student->image))) {
                 unlink(public_path('student_images/' . $student->image));
