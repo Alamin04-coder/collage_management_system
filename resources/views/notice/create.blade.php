@@ -53,7 +53,7 @@
 
                         {{-- Submit Button --}}
                         <div class="d-flex justify-content-between">
-                            <a href="" class="btn btn-secondary">⬅ Back</a>
+                            <a href="{{route('notice.list')}}" class="btn btn-secondary">⬅ Back</a>
                             <button type="submit" class="btn btn-success">✅ Save Notice</button>
                         </div>
 

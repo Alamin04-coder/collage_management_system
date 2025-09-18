@@ -195,11 +195,13 @@
                 <p>Communicate with your teachers</p>
             </div>
             </a>
+            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#noticeModal">
             <div class="feature-card">
                 <i class="bi bi-calendar-event"></i>
                 <h5>Events</h5>
                 <p>Stay updated with upcoming events</p>
             </div>
+            </a>
 
             <a href="{{ route('logout') }}"
                 onclick="event.preventDefault();document.getElementById('logout-form').submit();">
@@ -208,8 +210,37 @@
 
                     <h5>Logout</h5>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
-                    <p> click here for exit your account</p>
+                    <p> click here for exit your account</p> <br>
                 </div>
+            </a>
+            <div class="modal fade" id="noticeModal" tabindex="-1" aria-labelledby="noticeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-warning text-dark">
+                        <h5 class="modal-title" id="noticeModalLabel">Latest Notices</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @if(isset($allNotice) && $allNotice->count())
+                        <ul class="list-group">
+                            @foreach($allNotice as $notice1)
+                            <li class="list-group-item">
+                                <h6>{{ $notice1->title }}</h6><br>
+                                <p>{{ $notice1->description }}</p>
+                                <p>Published date :{{ $notice1->created_at->format('d M, Y h:i A') }}</p>
+                            </li>
+                            @endforeach
+                        </ul>
+                        @else
+                        <p>No notices available.</p>
+                        @endif
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
     </div>

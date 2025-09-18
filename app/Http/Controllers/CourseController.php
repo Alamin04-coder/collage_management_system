@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequests;
 use App\Models\course;
 use App\Models\teacher;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,9 +14,22 @@ class CourseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() {
+    public function index(Request $request)
+    {
+        $search = $request->input('search');
+        $course = course::query();
 
-       
+        try {
+            $course = $course->where('course_name', 'like', "%{$search}%")
+                ->orWhere("course_code", "like", "%{$search}%")
+                ->orWhere("course_fee", "like", "%{$search}%")
+                ->orWhere("teacher_id", "like", "%{$search}%");
+            $course = $course->paginate(10);
+            $course->appends(['search' => $search]);
+            return view('course.showAllCourse', compact('course', 'search'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'course not found' . $e->getMessage());
+        }
     }
 
     /**
@@ -42,7 +54,7 @@ class CourseController extends Controller
             course::create($validatedData);
             return redirect()->route('course.list')->with('success', 'Course successfully added ');
         }
-        return redirect()->back()->with('error','you can not create course');
+        return redirect()->back()->with('error', 'you can not create course');
     }
 
     /**
@@ -61,8 +73,9 @@ class CourseController extends Controller
     public function edit(string $id)
     {
         $course = Course::findOrFail($id);
-        if (Auth::user()->role !== 'admin' && Auth::user()->role !== 'teacher') {
-            abort(403, 'unauthorized action');
+        if (Auth::user()->role !== 'admin' && $course->teacher_id != Auth::user()->teacher->id) {
+             return redirect()->back()->with('error', "You have access only to your course.");
+            
         }
 
         $teachers = teacher::all();
@@ -83,7 +96,7 @@ class CourseController extends Controller
                 $change[$key] = $value;
             }
         }
-        if ($course->teacher_id != Auth::user()->id && Auth::user()->role !== 'admin') {
+        if ($course->teacher_id != Auth::user()->teacher->id && Auth::user()->role !== 'admin') {
             abort(403, 'Unauthorized Action');
         }
 
@@ -107,28 +120,11 @@ class CourseController extends Controller
     {
 
         $course = Course::findOrFail($id);
-        if ($course->teacher_id != Auth::user()->id && Auth::user()->role !== 'admin') {
-            abort(403, 'Unauthorized Action');
+        if ($course->teacher_id != Auth::user()->teacher->id && Auth::user()->role !== 'admin') {
+            return redirect()->back()->with('error','you can not delete ');
         }
 
         $course->delete();
         return redirect()->back()->with('success', 'successfully deleted ');
-    }
-
-    public function show_course(Request $request)
-    {
-        $search = $request->input('search');
-        $course = course::query();
-
-        try {
-            $course = $course->where('course_name', 'like', "%{$search}%")
-                ->orWhere("course_code", "like", "%{$search}%")
-                ->orWhere("course_fee", "like", "%{$search}%");
-            $course = $course->paginate(10);
-            $course->appends(['search' => $search]);
-            return view('course.showAllCourse', compact('course', 'search'));
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'course not found' . $e->getMessage());
-        }
     }
 }

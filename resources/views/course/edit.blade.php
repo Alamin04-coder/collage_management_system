@@ -4,148 +4,78 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create Course</title>
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-
-    .container {
-      background: rgba(255, 255, 255, 0.9);
-      padding: 40px;
-      border-radius: 20px;
-      width: 100%;
-      max-width: 500px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    }
-
-    h1 {
-      text-align: center;
-      color: #333;
-      margin-bottom: 30px;
-    }
-
-    .form-group {
-      position: relative;
-      margin-bottom: 25px;
-    }
-
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-      width: 100%;
-      padding: 14px 12px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      font-size: 16px;
-      background: none;
-    }
-
-    .form-group label {
-      position: absolute;
-      left: 12px;
-      top: 14px;
-      color: #888;
-      font-size: 16px;
-      pointer-events: none;
-      transition: 0.3s ease all;
-    }
-
-    .form-group input:focus+label,
-    .form-group input:not(:placeholder-shown)+label,
-    .form-group textarea:focus+label,
-    .form-group textarea:not(:placeholder-shown)+label,
-    .form-group select:focus+label,
-    .form-group select:not([value=""])+label {
-      top: -10px;
-      left: 10px;
-      font-size: 13px;
-      background: #fff;
-      padding: 0 5px;
-      color: #667eea;
-    }
-
-    textarea {
-      resize: none;
-    }
-
-    button {
-      width: 100%;
-      background: #667eea;
-      color: #fff;
-      padding: 12px;
-      border: none;
-      border-radius: 10px;
-      font-size: 18px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    button:hover {
-      background: #5a67d8;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    }
-  </style>
+  <title>Update Course</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body>
-@include('layouts.message') 
-  
-  <div class="container">
-    <h1>Update Course</h1>
-    <form action="{{route('course.update',$course->id)}}" method="POST">
-      @csrf
-      @method('PUT')
+<body class="bg-light">
 
-      <input type="hidden" name="form_type" value="course">
-      <div class="form-group">
-        <input type="text" id="name" name="course_name" placeholder=" " value="{{old('course_name',$course->course_name)}}" required>
-        <label for="course_name">Course Name</label>
-      </div>
-      <div class="form-group">
-        <input type="text" id="name" name="course_fee" placeholder=" " value="{{old('course_fee',$course->course_fee)}}" required>
-        <label for="course_fee">Course Fee</label>
-      </div>
-      <div class="form-group">
-        <input type="text" id="name" name="course_time" placeholder=" " value="{{old('course_time',$course->course_time)}}" required>
-        <label for="course_time">Course time</label>
-      </div>
+  @include('layouts.message')
 
-      <div class="form-group">
-        <input type="text" id="code" name="course_code" placeholder=" " value="{{old('course_code',$course->course_code)}}" required>
-        <label for="course_code">Course Code</label>
-      </div>
+  <div class="container py-5">
+    <div class="card shadow-lg mx-auto" style="max-width: 600px;">
+      <div class="card-body">
+        <h2 class="card-title text-center mb-4">Update Course</h2>
 
-      <div class="form-group">
-        <textarea id="description" name="description" rows="4" placeholder=" " required>{{old('description',$course->description)}}</textarea>
-        <label for="description">Description</label>
-      </div>
+        <form action="{{ route('course.update', $course->id) }}" method="POST">
+          @csrf
+          @method('PUT')
+          <input type="hidden" name="form_type" value="course">
 
-      <div class="form-group">
-        <select id="teacher" name="teacher_id" required>
-          <option value="{{$course->teacher->id}}">{{$course->teacher->name}}</option>
-          @if($teachers && count($teachers) > 0)
-          @foreach($teachers as $teacher)
-          <option value="{{$teacher->id}}">{{$teacher->name}}</option>
-          @endforeach
-          @else
-          <option value="">No teacher Found</option>
-          @endif
-        </select>
-        <label for="teacher">Assign Teacher</label>
-      </div>
+          <div class="mb-3 form-floating">
+            <input type="text" class="form-control" id="course_name" name="course_name" placeholder="Course Name" value="{{ old('course_name', $course->course_name) }}" required>
+            <label for="course_name">Course Name</label>
+          </div>
 
-      <button type="submit">Update Course</button>
-    </form>
+          <div class="mb-3 form-floating">
+            <input type="text" class="form-control" id="course_fee" name="course_fee" placeholder="Course Fee" value="{{ old('course_fee', $course->course_fee) }}" required>
+            <label for="course_fee">Course Fee</label>
+          </div>
+
+          <div class="mb-3 form-floating">
+            <input type="text" class="form-control" id="course_time" name="course_time" placeholder="Course Time" value="{{ old('course_time', $course->course_time) }}" required>
+            <label for="course_time">Course Time</label>
+          </div>
+
+          <div class="mb-3 form-floating">
+            <input type="text" class="form-control" id="course_code" name="course_code" placeholder="Course Code" value="{{ old('course_code', $course->course_code) }}" required>
+            <label for="course_code">Course Code</label>
+          </div>
+
+          <div class="mb-3 form-floating">
+            <textarea class="form-control" placeholder="Description" id="description" name="description" style="height: 100px;" required>{{ old('description', $course->description) }}</textarea>
+            <label for="description">Description</label>
+          </div>
+
+          <div class="mb-3 form-floating">
+            <select class="form-select" id="teacher" name="teacher_id" required>
+              <option value="{{ $course->teacher->id }}">{{ $course->teacher->name }}</option>
+              @if(Auth::user()->role === "admin")
+                @if($teachers && count($teachers) > 0)
+                  @foreach($teachers as $teacher)
+                    <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
+                  @endforeach
+                @else
+                  <option value="">No teacher Found</option>
+                @endif
+              @endif
+            </select>
+            <label for="teacher">Assign Teacher</label>
+          </div>
+
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary flex-fill">Update Course</button>
+            <a href="{{ route('course.list') }}" class="btn btn-secondary flex-fill">Cancel</a>
+          </div>
+
+        </form>
+      </div>
+    </div>
   </div>
 
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

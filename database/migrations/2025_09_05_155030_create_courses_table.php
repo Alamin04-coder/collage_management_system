@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('course_time');
             $table->string('description');
             $table->string('course_code');
-            $table->foreignId('teacher_id')->constrained()->onUpdate('cascade')->delete('cascade');
+            $table->foreignId('teacher_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
 

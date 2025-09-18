@@ -13,12 +13,12 @@ class course extends Seeder
     {
         $faker = Faker::create();
 
-        // সব teachers এর id নিয়ে আসি
+       
         $teachers = Teacher::pluck('id')->toArray();
 
-        // যদি teacher না থাকে তাহলে warning দেখাই
+        
         if (empty($teachers)) {
-            $this->command->warn('⚠️ Please seed teachers before seeding courses.');
+            $this->command->warn('no teacher found ,');
             return;
         }
 
@@ -31,7 +31,7 @@ class course extends Seeder
                 'course_time' => $faker->randomElement(['Morning', 'Afternoon', 'Evening']),
                 'description' => $faker->sentence(10),
                 'course_code' => 'CSE' . str_pad($i, 3, '0', STR_PAD_LEFT),
-                'teacher_id'  => $faker->randomElement($teachers), // valid teacher_id
+                'teacher_id'  => $faker->randomElement($teachers), 
                 'created_at'  => now(),
                 'updated_at'  => now(),
             ];

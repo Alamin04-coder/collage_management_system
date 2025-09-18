@@ -54,7 +54,11 @@
 
                         {{-- Submit Button --}}
                         <div class="d-flex justify-content-between">
-                            <a href="" class="btn btn-secondary">⬅ Back</a>
+                            @if(Auth::user()->role ==="admin")
+                            <a href="{{route('notice.list')}}" class="btn btn-secondary">⬅ Back</a>
+                            @elseif(Auth::user()->role ==="admin")
+                            <a href="{{route('teacher.dashboard')}}" class="btn btn-secondary">⬅ Back</a>
+                            @endif
                             <button type="submit" class="btn btn-success">✅ update Notice</button>
                         </div>
 

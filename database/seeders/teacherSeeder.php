@@ -16,7 +16,7 @@ class TeacherSeeder extends Seeder
         $specializations = ['AI', 'Networking', 'Data Science', 'Machine Learning', 'Web Development', 'Cyber Security', 'Database'];
         $genders = ['Male', 'Female', 'Other'];
 
-        $totalTeachers = 100; 
+        $totalTeachers = 15; 
 
         for ($i = 1; $i <= $totalTeachers; $i++) {
             

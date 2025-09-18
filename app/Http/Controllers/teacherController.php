@@ -17,7 +17,8 @@ class teacherController extends Controller
     {
         $teacher = Auth::user()->teacher;
         $notices = Notice::latest()->take(2)->get();
-        return view("teachers.dashboard", compact("teacher","notices"));
+        $allNotice = Notice::latest()->get();
+        return view("teachers.dashboard", compact("teacher","notices","allNotice"));
     }
     /**
      * Show the form for creating a new resource.

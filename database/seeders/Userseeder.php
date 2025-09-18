@@ -15,7 +15,7 @@ class Userseeder extends Seeder
  
   public function run(): void
     {
-        for ($i = 1; $i <= 50; $i++) {
+        for ($i = 1; $i <= 20; $i++) {
            
             $user = User::create([
                 'name' => 'Student ' . $i,

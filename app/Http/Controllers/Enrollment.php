@@ -48,8 +48,9 @@ class Enrollment extends Controller
     {
         $validatedData = $request->validated();
 
-        CourseEnrollment::create($validatedData);
-        return redirect()->route('course.list');
+        $enroll = CourseEnrollment::create($validatedData);
+        $name = $enroll->course->course_name;
+        return redirect()->route('course.list')->with('success',"successfully enrolled {$name}");
     }
 
     /**

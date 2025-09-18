@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Create Course</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -16,135 +17,85 @@
       padding: 20px;
     }
 
-    .container {
-      background: rgba(255, 255, 255, 0.9);
-      padding: 40px;
+    .card {
       border-radius: 20px;
-      width: 100%;
-      max-width: 500px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     }
 
-    h1 {
-      text-align: center;
-      color: #333;
-      margin-bottom: 30px;
+    .form-floating input,
+    .form-floating textarea,
+    .form-floating select {
+      border-radius: 10px;
     }
 
-    .form-group {
-      position: relative;
-      margin-bottom: 25px;
-    }
-
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-      width: 100%;
-      padding: 14px 12px;
-      border: 1px solid #ccc;
+    .btn-primary,
+    .btn-secondary {
       border-radius: 10px;
       font-size: 16px;
-      background: none;
-    }
-
-    .form-group label {
-      position: absolute;
-      left: 12px;
-      top: 14px;
-      color: #888;
-      font-size: 16px;
-      pointer-events: none;
-      transition: 0.3s ease all;
-    }
-
-    .form-group input:focus+label,
-    .form-group input:not(:placeholder-shown)+label,
-    .form-group textarea:focus+label,
-    .form-group textarea:not(:placeholder-shown)+label,
-    .form-group select:focus+label,
-    .form-group select:not([value=""])+label {
-      top: -10px;
-      left: 10px;
-      font-size: 13px;
-      background: #fff;
-      padding: 0 5px;
-      color: #667eea;
-    }
-
-    textarea {
-      resize: none;
-    }
-
-    button {
-      width: 100%;
-      background: #667eea;
-      color: #fff;
-      padding: 12px;
-      border: none;
-      border-radius: 10px;
-      font-size: 18px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    button:hover {
-      background: #5a67d8;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     }
   </style>
 </head>
 
 <body>
-@include('layouts.message') 
 
-  <div class="container">
-    <h1>Create New Course</h1>
-    <form action="{{route('course.store')}}" method="POST">
+@include('layouts.message')
+
+<div class="container">
+  <div class="card shadow-lg mx-auto p-4" style="max-width: 600px;">
+    <h2 class="text-center mb-4">Create New Course</h2>
+
+    <form action="{{ route('course.store') }}" method="POST">
       @csrf
-
       <input type="hidden" name="form_type" value="course">
-      <div class="form-group">
-        <input type="text" id="name" name="course_name" placeholder=" " required>
+
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="course_name" name="course_name" placeholder="Course Name" required>
         <label for="course_name">Course Name</label>
       </div>
-      <div class="form-group">
-        <input type="text" id="name" name="course_fee" placeholder=" " required>
+
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="course_fee" name="course_fee" placeholder="Course Fee" required>
         <label for="course_fee">Course Fee</label>
       </div>
-      <div class="form-group">
-        <input type="text" id="name" name="course_time" placeholder=" " required>
-        <label for="course_time">Course time</label>
+
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="course_time" name="course_time" placeholder="Course Time" required>
+        <label for="course_time">Course Time</label>
       </div>
 
-      <div class="form-group">
-        <input type="text" id="code" name="course_code" placeholder=" " required>
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="course_code" name="course_code" placeholder="Course Code" required>
         <label for="course_code">Course Code</label>
       </div>
 
-      <div class="form-group">
-        <textarea id="description" name="description" rows="4" placeholder=" " required></textarea>
+      <div class="form-floating mb-3">
+        <textarea class="form-control" placeholder="Description" id="description" name="description" style="height: 100px;" required></textarea>
         <label for="description">Description</label>
       </div>
 
-      <div class="form-group">
-        <select id="teacher" name="teacher_id" required>
-          <option value="" disabled selected>Select teacher</option>
+      <div class="form-floating mb-3">
+        <select class="form-select" id="teacher" name="teacher_id" required>
+          <option value="" disabled selected>Select Teacher</option>
           @if($teachers && count($teachers) > 0)
-          @foreach($teachers as $teacher)
-          <option value="{{$teacher->id}}">{{$teacher->name}}</option>
-          @endforeach
+            @foreach($teachers as $teacher)
+              <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
+            @endforeach
           @else
-          <option value="">No teacher Found</option>
+            <option value="">No Teacher Found</option>
           @endif
         </select>
         <label for="teacher">Assign Teacher</label>
       </div>
 
-      <button type="submit">Create Course</button>
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary flex-fill">Create Course</button>
+        <a href="{{ route('course.list') }}" class="btn btn-secondary flex-fill">Cancel</a>
+      </div>
+
     </form>
   </div>
+</div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

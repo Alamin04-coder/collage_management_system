@@ -125,7 +125,11 @@
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header bg-warning text-dark">
-                        <h5 class="modal-title" id="noticeModalLabel">{{Auth::user()->name}},Course</h5>
+                        @if(Auth::user()->role === "student")
+                        <h5 class="modal-title" id="noticeModalLabel">{{Auth::user()->student ? Auth::user()->student->name : 'no name'}}, your Course</h5>
+                        @elseif(Auth::user()->role === "teacher")
+                        <h5 class="modal-title" id="noticeModalLabel">{{Auth::user()->teacher ? Auth::user()->teacher->name : 'no name'}}, your Course</h5>
+                        @endif
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">

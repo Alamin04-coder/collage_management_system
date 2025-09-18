@@ -10,7 +10,7 @@ class NoticeController extends Controller
 {
     public function index()
     {
-        $notices = Notice::all();
+        $notices = Notice::latest()->get();
         return view('notice.showAll', compact('notices'));
     }
 

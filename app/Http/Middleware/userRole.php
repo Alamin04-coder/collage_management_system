@@ -18,7 +18,9 @@ class userRole
     {
         
         if (!Auth::check()) {
-            return redirect('dashboard');
+            return redirect('dashboard'); 
+            
+            
         }
 
         $userRole = Auth::user()->role;
