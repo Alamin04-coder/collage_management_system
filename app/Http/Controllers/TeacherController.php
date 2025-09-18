@@ -8,7 +8,7 @@ use App\Models\teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class teacherController extends Controller
+class TeacherController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -38,7 +38,7 @@ class teacherController extends Controller
         $validatedData = $request->validated();
 
         if (Auth::user()->role !== "admin") {
-            if (teacher::where('user_id', Auth::id())->exists()) {
+            if (Teacher::where('user_id', Auth::id())->exists()) {
                 return redirect()->back()->with('error', 'you already added your information');
             }
         }
@@ -84,7 +84,7 @@ class teacherController extends Controller
      */
     public function update(UserRequests $request, string $id)
     {
-        $teacher = teacher::find($id);
+        $teacher = Teacher::find($id);
 
         if (Auth::user()->role !== 'admin' && $teacher->user->id != Auth::id()) {
             abort(403, 'unauthorized action !');
