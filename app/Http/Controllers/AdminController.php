@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\course;
+use App\Models\Course;
 use App\Models\CourseEnrollment;
-use App\Models\student;
-use App\Models\teacher;
+use App\Models\Student;
+use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,10 +17,10 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $totalStudent = student::count();
-        $totalTeacher = teacher::count();
+        $totalStudent = Student::count();
+        $totalTeacher = Teacher::count();
         $totalUser = User::count();
-        $totalCourse = course::count();
+        $totalCourse = Course::count();
 
         return view("admin.dashboard", compact('totalStudent', 'totalTeacher', 'totalUser', 'totalCourse'));
     }
@@ -28,7 +28,7 @@ class AdminController extends Controller
     public function show_student(Request $request)
     {
         $search = $request->input('search');
-        $students = student::query();
+        $students = Student::query();
         try {
             if ($search) {
                 $students->where('name', 'like', "%{$search}%")
@@ -50,7 +50,7 @@ class AdminController extends Controller
     public function show_teacher(Request $request)
     {
         $search = $request->input('search');
-        $teachers = teacher::query(); 
+        $teachers = Teacher::query(); 
         try {
             if ($search) {
                 $teachers->where('name', 'like', "%{$search}%")
