@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequests;
-use App\Models\course;
-use App\Models\teacher;
+use App\Models\Tourse;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,7 +37,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        $teachers = teacher::all();
+        $teachers = Teacher::all();
         return view('course.create', compact('teachers'));
     }
 
@@ -78,7 +78,7 @@ class CourseController extends Controller
             
         }
 
-        $teachers = teacher::all();
+        $teachers = Teacher::all();
 
         return view('course.edit', compact('course', 'teachers'));
     }
