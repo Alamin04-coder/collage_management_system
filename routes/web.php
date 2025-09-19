@@ -113,4 +113,6 @@ Route::controller(NoticeController::class)->group(function() {
     Route::get('/notice', 'index')->name('notice.list');
 });
 
+// vvvv
+
 require __DIR__ . '/auth.php';
