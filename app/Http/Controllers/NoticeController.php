@@ -87,7 +87,7 @@ class NoticeController extends Controller
     {
         $notice = Notice::findOrFail($id);
         $role = Auth::user()->role;
-        if ($role === "admin" || $role === "teacher" || $notice->user_id === Auth::id()) {
+        if ($role === "admin" ||  $notice->user_id === Auth::id()) {
             $notice->delete();
             return redirect()->back()->with('success', 'Notice Deleted successfully !');
         }

@@ -200,7 +200,7 @@
                     <h5 class="modal-title" id="contactModalLabel">Contact Us</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="" method="post">
+                <form action="#" method="get">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="name" class="form-label">Your Name</label>

@@ -10,7 +10,7 @@
 
     <style>
         body {
-            background-image: url("images/background.jpg");
+            background-image: url("{{asset('images/background.jpg')}}");
             background-size: cover;
             background-position: center;
             min-height: 100vh;

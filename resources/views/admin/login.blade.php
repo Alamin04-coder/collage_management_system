@@ -108,7 +108,7 @@
 
                 @include('layouts.message')
 
-                <form method="POST" action="{{ route('login') }}">
+                <form method="POST" action="{{ route('admin.login') }}">
                     @csrf
 
                     <div class="form-floating mb-3">
@@ -130,12 +130,6 @@
                     </div>
 
                     <button type="submit" class="btn btn-outline-primary w-100">Login</button>
-
-                    <div class="text-center mt-3">
-                        <p style="color: white">Don't have an account?
-                            <a href="{{ route('register') }}" style="color:#4facfe;">Register here</a>
-                        </p>
-                    </div>
                 </form>
             </div>
         </div>

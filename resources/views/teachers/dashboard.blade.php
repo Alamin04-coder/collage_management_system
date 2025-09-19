@@ -236,6 +236,7 @@
                         @endif
                     </div>
                     <div class="modal-footer">
+                        <a href="{{route('notice.list')}}" class="btn btn-success">create Notice</a>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
