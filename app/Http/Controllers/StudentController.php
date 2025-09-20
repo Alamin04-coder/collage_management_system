@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequests;
 use App\Models\Notice;
 use App\Models\Student;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
@@ -139,9 +138,9 @@ class StudentController extends Controller
                 unlink(public_path('student_images/' . $student->image));
             }
             $student->delete();
-            return redirect()->route('admin.students')->with('success', 'Student deleted successfully.');
+            return redirect()->route('admin.student.list')->with('success', 'Student deleted successfully.');
         } catch (\Exception $e) {
-            return redirect()->route('admin.student.list')->with('error', 'Failed to delete student. Please try again.');
+            return redirect()->route('admin.student.list')->with('error', 'Failed to delete student. Please try again'.$e->getMessage());
         }
     }
 

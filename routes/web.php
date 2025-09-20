@@ -28,16 +28,14 @@ Route::middleware('guest')->group(function () {
 // Authenticated Routes
 Route::middleware(['auth'])->group(function () {
 
-    Route::post('/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 
     Route::get('/teacher/view/{id}', [TeacherController::class, 'show'])->name('teacher.viewSingleTeacher');
     Route::get('/student/view/{id}', [StudentController::class, 'viewSingleStudent'])->name('student.viewSingleStudent');
-    Route::put('/user/update/{id}', [PasswordController::class,'update'])->name('update.user.password');
-
-    // Student Routes
-    Route::middleware('role:student')->group(function () {
+    Route::put('/user/update/{id}', [PasswordController::class, 'update'])->name('update.user.password');
+    Route::get('/complete/profile', [AdminController::class, 'role'])->name('user.role');
+    // Student admin  Routes
+    Route::middleware('role:student,admin')->group(function () {
         Route::controller(StudentController::class)->group(function () {
-            Route::get('/student/dashboard', 'index')->name('student.dashboard');
             Route::get('/student/info', 'create')->name('student.info');
             Route::post('/student/store', 'store')->name('student.store');
             Route::get('/student/profile', 'update_p')->name('update.profile');
@@ -46,11 +44,13 @@ Route::middleware(['auth'])->group(function () {
             Route::delete('/student/delete/{id}', 'destroy')->name('admin.student.delete');
         });
     });
-
-    // Teacher Routes
-    Route::middleware('role:teacher')->group(function () {
+    // Student Routes
+    Route::middleware('role:student')->group(function () {
+        Route::get('/student/dashboard', [StudentController::class, 'index'])->name('student.dashboard');
+    });
+    // Teacher admin Routes
+    Route::middleware('role:teacher,admin')->group(function () {
         Route::controller(TeacherController::class)->group(function () {
-            Route::get('/teacher/dashboard', 'index')->name('teacher.dashboard');
             Route::get('/teacher/profile', 'update_p')->name('teacher.update.profile');
             Route::get('/teacher/info', 'create')->name('teacher.info');
             Route::post('/teacher/store', 'store')->name('store.teacher');
@@ -58,6 +58,22 @@ Route::middleware(['auth'])->group(function () {
             Route::put('/teacher/update/{id}', 'update')->name('teacher.update');
             Route::delete('/teacher/delete/{id}', 'destroy')->name('destroy.teacher');
         });
+
+        //notice routes group
+        Route::controller(NoticeController::class)->group(function () {
+            Route::get('/notice/home', 'index')->name('notice.index');
+            Route::get('/notice/create', 'create')->name('notice.create');
+            Route::post('/notice/store', 'store')->name('notice.store');
+            Route::get('/notice/edit/{id}', 'edit')->name('notice.edit');
+            Route::put('/notice/update/{id}', 'update')->name('notice.update');
+            Route::delete('/notice/destroy/{id}', 'destroy')->name('notice.destroy');
+            Route::get('/notice', 'index')->name('notice.list');
+        });
+    });
+
+
+    Route::middleware('role:teacher')->group(function () {
+        Route::get('/teacher/dashboard', [TeacherController::class, 'index'])->name('teacher.dashboard');
     });
 
     // Admin Routes
@@ -67,21 +83,21 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/admin/students', 'show_student')->name('admin.student.list');
             Route::get('/admin/teachers', 'show_teacher')->name('teacher.list');
             Route::get('/admin/users', 'show_user')->name('users.list');
-
             Route::get('/admin/user/edit{id}', 'edit_user')->name('admin.user.edit');
             Route::put('/admin/user/update{id}', 'update_user')->name('admin.user.update');
             Route::delete('/admin/user/delete{id}', 'destroy')->name('destroy.user');
-            Route::get('/complete/profile', 'role')->name('user.role');
-
             Route::get('/createUser', [RegisteredUserController::class, 'createUserByAdmin'])->name('user.create');
             Route::post('/admin/user', [RegisteredUserController::class, 'store'])->name('admin.register');
-
+            Route::post('/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
             Route::get('/enroll', 'enrollStudent')->name('enrolled');
         });
     });
 
+
+
     // Mixed Role Routes
     Route::middleware('role:admin,teacher,student')->group(function () {
+        //course routes
         Route::controller(CourseController::class)->group(function () {
             Route::get('/create/course', 'create')->name('create.course.page');
             Route::post('/course/store', 'store')->name('course.store');
@@ -92,24 +108,24 @@ Route::middleware(['auth'])->group(function () {
             Route::delete('/course/destroy/{id}', 'destroy')->name('course.destroy');
         });
 
-        Route::get('/course{id}', [Enrollment::class,'show'])->name('course');
-        Route::post('/course/post', [Enrollment::class,'store'])->name('enroll.course');
-        Route::get('/myCourse', [Enrollment::class,'index'])->name('myCourse');
-        Route::get('/cou', [Enrollment::class,'studentEnroll_course'])->name('coc');
-        Route::get('/enrolled', [Enrollment::class,'enrolledCourse'])->name('enrolled.user');
+        // user routes
+        Route::controller(AdminController::class)->group(function () {
+            Route::get('/admin/user/edit{id}', 'edit_user')->name('admin.user.edit');
+            Route::put('/admin/user/update{id}', 'update_user')->name('admin.user.update');
+            Route::delete('/admin/user/delete{id}', 'destroy')->name('destroy.user');
+        });
+
+        // enroll route 
+        Route::controller(Enrollment::class)->group(function () {
+            Route::get('/course{id}', 'show')->name('course');
+            Route::post('/course/post', 'store')->name('enroll.course');
+            Route::get('/myCourse', 'index')->name('myCourse');
+            Route::get('/cou', 'studentEnroll_course')->name('coc');
+            Route::get('/enrolled', 'enrolledCourse')->name('enrolled.user');
+        });
     });
 
-    // Notices
-    Route::controller(NoticeController::class)->group(function() {
-        Route::get('/notice/home', 'index')->name('notice.index');
-        Route::get('/notice/create', 'create')->name('notice.create');
-        Route::post('/notice/store', 'store')->name('notice.store');
-        Route::get('/notice/edit/{id}', 'edit')->name('notice.edit');
-        Route::put('/notice/update/{id}', 'update')->name('notice.update');
-        Route::delete('/notice/destroy/{id}', 'destroy')->name('notice.destroy');
-        Route::get('/notice', 'index')->name('notice.list');
-    });
-
+    
 });
 
 require __DIR__ . '/auth.php';
